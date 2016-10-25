@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">WeyHeyBread</string>
+    <string name="a1">กรุณากรอกไอดี</string>
+    <string name="a11">ตะกร้าสินค้า</string>
+    <string name="a2">กรุณากรอกรหัสผ่าน</string>
+    <string name="a22">แผนที่ร้าน</string>
+    <string name="a3">กรุณากรอกชื่อ</string>
+    <string name="a33">ประวัติการสั่งซื้อ</string>
+    <string name="a4">กรุณากรอกนามสกุล</string>
+    <string name="a44">สั่งสินค้าเพิ่ม</string>
+    <string name="a5">กรุณากรอกที่อยู่</string>
+    <string name="a55">ยืนยันการสั่งซื้อ</string>
+    <string name="a6">กรุณากรอกเบอร์โทร"</string>
+    <string name="tell">โทร. 084-434-5155"</string>
+    <string name="receive">OrderList</string>
+    <string name="receive1">GrandTotal</string>
+    <string name="b1">No</string>
+    <string name="b2">ชื่อ</string>
+    <string name="b3">จำนวน</string>
+    <string name="b4">ราคา/หน่วย</string>
+    <string name="b5">ราคารวม</string>
+    <string name="c3">เข้าสู่ระบบ</string>
+    <string name="c2">สมัครสมาชิก</string>
+    <string name="c4">ชื่อผู้ใช้ :</string>
+    <string name="c5">รหัสผ่าน :</string>
+    <string name="c6">ชื่อ :</string>
+    <string name="c7">นามสกุล :</string>
+    <string name="c8">ที่อยู่ :</string>
+    <string name="c9">เบอร์โทรศัพท์ :</string>
+    <string name="c10">สมัครสมาชิก </string>
+    <string name="d1">ราคา </string>
+    <string name="d2">บาท </string>
+    <string name="d3">สั่งซื้อสินค้า </string>
+    <string name="d4">รายละเอียดการสั่งซื้อ </string>
+    <string name="d5">ราคารวมทั้งหมด </string>
+
+    <string name="d6">ลำดับ </string>
+    <string name="d7">ราคารวมทั้งหมด </string>
+    <string name="d8">ราคารวมทั้งหมด </string>
+    <string name="d9">ราคารวมทั้งหมด </string>
+    <string name="e1">ยอดสั่งซื้อ </string>
+    <string name="e3">ข้อมูลส่วนตัว </string>
+    <string name="e33">แก้ไขข้อมูล </string>
+    <string name="e5">บันทึก </string>
+    <string name="e6">ยกเลิก </string>
+    <string name="e7">ประวัติการสั่งซื้อ </string>
+    <string name="f1">เลขที่สั่งซื้อ </string>
+    <string name="f2">วันที่สั่งซื้อ </string>
+    <string name="f3">สถานะ </string>
+    <string name="f4">ตำแหน่งร้านขนมปัง </string>
+    <string name="title_activity_maps">Map</string>
+
+</resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="drucc.sittichok.heyheybread.showMenuActivity"
+    android:background="@drawable/menubg1">
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_above="@+id/button5"
+        android:layout_margin="15dp"
+        android:background="#82ffffff" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clickConfirmOrder"
+        android:text="@string/d3"
+        android:id="@+id/button5"
+        android:layout_alignParentBottom="true"
+        android:textSize="20dp" />
+</RelativeLayout>

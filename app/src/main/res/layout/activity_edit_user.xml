@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="drucc.sittichok.heyheybread.EditUser"
+    android:background="@drawable/menubg1">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/e3"
+        android:id="@+id/textView16"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/h1" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/linSave">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/button3"
+            android:layout_weight="1"
+            android:onClick="clickSaveEdit"
+            android:text="@string/e5"
+            android:textSize="20dp" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/e6"
+            android:id="@+id/button8"
+            android:layout_weight="1"
+            android:onClick="clickCancelEdit"
+            android:textSize="20dp"
+            android:singleLine="false" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView16"
+        android:layout_above="@+id/linSave"
+        android:layout_margin="15dp"
+        android:background="#96ffffff"
+        android:padding="15dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/c4"
+                android:id="@+id/textView35"
+                android:textSize="@dimen/h2"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText3"
+                android:layout_weight="2"
+                android:inputType="text"
+                android:textSize="@dimen/h2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/c5"
+                android:id="@+id/textView37"
+                android:textSize="@dimen/h2"
+                android:layout_weight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText4"
+                android:layout_weight="2"
+                android:inputType="textPassword|text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/c6"
+                android:id="@+id/textView38"
+                android:textSize="@dimen/h2"
+                android:layout_weight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText5"
+                android:layout_weight="2"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/c7"
+                android:id="@+id/textView39"
+                android:textSize="@dimen/h2"
+                android:layout_weight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText6"
+                android:layout_weight="2"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/c8"
+                android:id="@+id/textView40"
+                android:textSize="@dimen/h2"
+                android:layout_weight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText7"
+                android:layout_weight="2"
+                android:inputType="none"
+                android:layout_gravity="top"
+                android:lines="4"
+                android:linksClickable="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/c9"
+                android:id="@+id/textView41"
+                android:textSize="@dimen/h2"
+                android:layout_weight="3" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText8"
+                android:layout_weight="3"
+                android:inputType="number|text" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
