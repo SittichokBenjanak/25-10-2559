@@ -22,20 +22,17 @@ public class ManageTABLE {
     public static final String COLUMN_Surname = "Surname";
     public static final String COLUMN_Address = "Address";
     public static final String COLUMN_Phone = "Phone";
-    public static final String COLUMN_Complacency = "Complacency";
+    public static final String COLUMN_Balance = "Balance";
 
     public static final String TABLE_BREAD = "breadTABLE";
     public static final String COLUMN_Bread = "Bread";
     public static final String COLUMN_Price = "Price";
-
     public static final String COLUMN_Image = "Image";
     public static final String COLUMN_Status = "Status";
-
 
     public static final String TABLE_ORDER = "orderTABLE";
     public static final String COLUMN_Date = "Date";
     public static final String COLUMN_Item = "Item";
-    public static final String COLUMN_idReceive = "idReceive";
 
     public static final String TABLE_TBORDER = "tborder";
     public static final String COLUMN_OrderDate = "OrderDate";
@@ -45,7 +42,6 @@ public class ManageTABLE {
     public static final String TABLE_TBORDER_DETAIL = "tborderdetail";
     public static final String COLUMN_OrderNo = "OrderNo";
     public static final String COLUMN_OrderDetail_ID = "OrderDetail_ID";
-
     public static final String COLUMN_Product_ID = "Product_ID";
     public static final String COLUMN_Amount = "Amount";
     public static final String COLUMN_PriceTotal = "PriceTotal";
@@ -157,7 +153,7 @@ public class ManageTABLE {
             Cursor objCursor = readSqLiteDatabase.query(TABLE_USER,
                     new String[]{COLUMN_id, COLUMN_User, COLUMN_Password,
                             COLUMN_Name, COLUMN_Surname, COLUMN_Address,
-                            COLUMN_Phone, COLUMN_Complacency},
+                            COLUMN_Phone, COLUMN_Balance},
                     COLUMN_User + "=?",
                     new String[]{String.valueOf(strUser)},
                     null,null,null,null);
@@ -213,39 +209,36 @@ public class ManageTABLE {
 
     public long addNewBread(String strBread,
                             String strPrice,
-
                             String strImage,
                             String strStatus) {
         ContentValues objContentValues = new ContentValues();
         //ContentValues คือ obj ที่ใช้ในการเชื่อมต่อฐานข้อมูล มันคือตัวกลาง
         objContentValues.put(COLUMN_Bread,strBread);
         objContentValues.put(COLUMN_Price,strPrice);
-
         objContentValues.put(COLUMN_Image,strImage);
         objContentValues.put(COLUMN_Status,strStatus);
 
         return writeSqLiteDatabase.insert(TABLE_BREAD,null,objContentValues);
     }   // addNewBread
 
-    public long addNewUser(String strID,
+    public long addNewUser(
                            String strUser,
                            String strPassword,
                            String strName,
                            String strSurname,
                            String strAddress,
                            String strPhone,
-                           String strComplacency) {
+                           String strBalance) {
         ContentValues objContentValues = new ContentValues();
         //ContentValues คือ obj ที่ใช้ในการเชื่อมต่อฐานข้อมูล มันคือตัวกลาง
 
-        objContentValues.put(COLUMN_id,strID);
         objContentValues.put(COLUMN_User,strUser);
         objContentValues.put(COLUMN_Password,strPassword);
         objContentValues.put(COLUMN_Name,strName);
         objContentValues.put(COLUMN_Surname,strSurname);
         objContentValues.put(COLUMN_Address,strAddress);
         objContentValues.put(COLUMN_Phone,strPhone);
-        objContentValues.put(COLUMN_Complacency,strComplacency);
+        objContentValues.put(COLUMN_Balance,strBalance);
 
         return writeSqLiteDatabase.insert(TABLE_USER,null,objContentValues);
 

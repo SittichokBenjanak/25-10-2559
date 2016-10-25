@@ -57,7 +57,7 @@ public class showMenuActivity extends AppCompatActivity {
             try {
                 OkHttpClient okHttpClient = new OkHttpClient();
                 Request.Builder builder = new Request.Builder();
-                Request request = builder.url("http://swiftcodingthai.com/mos/php_get_bread_mos.php").build();
+                Request request = builder.url("http://www.fourchokcodding.com/mos/php_get_bread.php").build();
                 Response response = okHttpClient.newCall(request).execute();
                 return response.body().string();
             } catch (Exception e) {

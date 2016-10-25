@@ -107,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy myPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(myPolicy);
         try {
-            String strURL = "http://swiftcodingthai.com/mos/php_add_data_mos.php";
+            String strURL = "http://www.fourchokcodding.com/mos/php_add_data.php";
             ArrayList<NameValuePair> objNameValuePairs = new ArrayList<NameValuePair>();
             objNameValuePairs.add(new BasicNameValuePair("isAdd","true"));
             objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_User,userString));
@@ -116,6 +116,7 @@ public class RegisterActivity extends AppCompatActivity {
             objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Surname, surnameString));
             objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Address, addressString));
             objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Phone, phoneString));
+            objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Balance,"0"));
 
             HttpClient objHttpClient = new DefaultHttpClient(); //เปิด เซอวิท ให้ สามารถเรียกใช้ไฟล์บนเซิฟเวอร์ได้
             HttpPost objHttpPost = new HttpPost(strURL);

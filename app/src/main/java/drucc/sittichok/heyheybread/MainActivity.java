@@ -89,10 +89,10 @@ public class MainActivity extends AppCompatActivity {
         while (intTimes <= 4) {
             InputStream objInputStream = null;
             String strJSON = null;
-            String strURLuser = "http://swiftcodingthai.com/mos/php_get_user_mos.php";
-            String strURLbread = "http://swiftcodingthai.com/mos/php_get_bread_mos.php";
-            String strURLtborder = "http://swiftcodingthai.com/mos/php_get_tborder_mos.php";
-            String strURLtborderDetail = "http://swiftcodingthai.com/mos/php_get_tborder_detail_mos.php";
+            String strURLuser = "http://www.fourchokcodding.com/mos/php_get_user.php";
+            String strURLbread = "http://www.fourchokcodding.com/mos/php_get_bread.php";
+            String strURLtborder = "http://www.fourchokcodding.com/mos/php_get_tborder.php";
+            String strURLtborderDetail = "http://www.fourchokcodding.com/mos/php_get_tborderdetail.php";
             HttpPost objHttpPost = null;
             //1. Create InputStream
             try {
@@ -141,16 +141,16 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject object = objJsonArray.getJSONObject(i);
                     switch (intTimes) {
                         case 1: // userTABLE
-                            String strID = object.getString("id");
+
                             String strUser = object.getString(ManageTABLE.COLUMN_User);
                             String strPassword = object.getString(ManageTABLE.COLUMN_Password);
                             String strName = object.getString(ManageTABLE.COLUMN_Name);
                             String strSurname = object.getString(ManageTABLE.COLUMN_Surname);
                             String strAddress = object.getString(ManageTABLE.COLUMN_Address);
                             String strPhone = object.getString(ManageTABLE.COLUMN_Phone);
-                            String strComplacency = object.getString(ManageTABLE.COLUMN_Complacency);
-                            objManageTABLE.addNewUser(strID, strUser, strPassword, strName, strSurname,
-                                    strAddress, strPhone, strComplacency);
+                            String strBalance = object.getString(ManageTABLE.COLUMN_Balance);
+                            objManageTABLE.addNewUser(strUser, strPassword, strName, strSurname,
+                                    strAddress, strPhone, strBalance);
                             break;
 
                         case 2: // breadTABLE

@@ -96,7 +96,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
                 OkHttpClient okHttpClient = new OkHttpClient();
                 Request.Builder builder = new Request.Builder();
-                Request request = builder.url("http://swiftcodingthai.com/mos/php_get_last_orderdetail.php").build();
+                Request request = builder.url("http://www.fourchokcodding.com/mos/php_get_last_orderdetail.php").build();
                 Response response = okHttpClient.newCall(request).execute();
                 return response.body().string();
 
@@ -211,7 +211,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         updateTotborder(strDate,
                 strIDuser,
                 Integer.toString(totalAnInt),
-                "รอการชำระ");
+                "กำลังจัดเตรียมสินค้า");
 
         // Intent HubActivity
         Intent objIntent = new Intent(ConfirmOrderActivity.this, HubActivity.class);
@@ -246,7 +246,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 .add("PriceTotal", strpriceTotal)
                 .build();
         Request.Builder builder = new Request.Builder();
-        Request request = builder.url("http://swiftcodingthai.com/mos/php_add_tborderdetail.php")
+        Request request = builder.url("http://www.fourchokcodding.com/mos/php_add_tborderdetail.php")
                 .post(requestBody).build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -305,7 +305,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("Status",strStatus));
 
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost("http://swiftcodingthai.com/mos/php_add_tborder.php");
+            HttpPost httpPost = new HttpPost("http://www.fourchokcodding.com/mos/php_add_tborder.php");
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs,"UTF-8"));
             httpClient.execute(httpPost);
 

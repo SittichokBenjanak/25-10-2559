@@ -50,7 +50,7 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
         while (intTimes <= 1) {
             InputStream objInputStream = null;
             String strJSON = null;
-            String strURLtborder = "http://swiftcodingthai.com/mos/php_get_tborder_mos.php";
+            String strURLtborder = "http://www.fourchokcodding.com/mos/php_get_tborder.php";
             HttpPost objHttpPost = null;
             // 1 Create InputStream
             try {

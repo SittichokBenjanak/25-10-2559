@@ -43,7 +43,6 @@ public class HistoryActivity extends AppCompatActivity {
     // Explicit
     private String strID;
     private ListView UserOrderListView;
-    private String OrderNumberString, DateOrderString, SumPriceString, StatusString;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -76,7 +75,7 @@ public class HistoryActivity extends AppCompatActivity {
         while (intTimes <= 1) {
             InputStream objInputStream = null;
             String strJSON = null;
-            String strURLtborder = "http://swiftcodingthai.com/mos/php_get_tborder_mos.php";
+            String strURLtborder = "http://www.fourchokcodding.com/mos/php_get_tborder.php";
             HttpPost objHttpPost = null;
             // 1 Create InputStream
             try {

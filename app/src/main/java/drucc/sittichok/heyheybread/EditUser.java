@@ -42,7 +42,7 @@ public class EditUser extends AppCompatActivity {
     private TextView userTextView;
     private String strID;
     private String passwordString,nameString,surnameString,addressString, phoneString;
-    private static final String urlSTRING = "http://swiftcodingthai.com/mos/php_edit_user_mos.php";
+    private static final String urlSTRING = "http://www.fourchokcodding.com/mos/php_edit_user.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class EditUser extends AppCompatActivity {
         while (intTimes <= 1) {
             InputStream objInputStream = null;
             String strJSON = null;
-            String strURLuser = "http://swiftcodingthai.com/mos/php_get_user_mos.php";
+            String strURLuser = "http://www.fourchokcodding.com/mos/php_get_user.php";
             HttpPost objHttpPost = null;
             //1. Create InputStream
             try {
@@ -112,16 +112,16 @@ public class EditUser extends AppCompatActivity {
                     switch (intTimes) {
                         case 1: // userTABLE
                             ManageTABLE objManageTABLE = new ManageTABLE(this);
-                            String strID = object.getString("id");
+
                             String strUser = object.getString(ManageTABLE.COLUMN_User);
                             String strPassword = object.getString(ManageTABLE.COLUMN_Password);
                             String strName = object.getString(ManageTABLE.COLUMN_Name);
                             String strSurname = object.getString(ManageTABLE.COLUMN_Surname);
                             String strAddress = object.getString(ManageTABLE.COLUMN_Address);
                             String strPhone = object.getString(ManageTABLE.COLUMN_Phone);
-                            String strComplacency = object.getString(ManageTABLE.COLUMN_Complacency);
-                            objManageTABLE.addNewUser(strID, strUser, strPassword, strName, strSurname,
-                                    strAddress, strPhone, strComplacency);
+                            String strBalance = object.getString(ManageTABLE.COLUMN_Balance);
+                            objManageTABLE.addNewUser(strUser, strPassword, strName, strSurname,
+                                    strAddress, strPhone, strBalance);
                             break;
                     }   //switch
                 }

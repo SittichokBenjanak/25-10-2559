@@ -20,7 +20,7 @@ public class MyOpenHelper extends SQLiteOpenHelper{
             "Surname text," +
             "Address text," +
             "Phone text," +
-            "Complacency text);";
+            "Balance text);";
 
     private static final String CREATE_TABLE_BREAD = "create table breadTABLE (" +
             "_id integer primary key," +
