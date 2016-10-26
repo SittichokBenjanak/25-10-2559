@@ -29,7 +29,7 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
     // Explicit
 
     private ImageView orderImageView, readImageView,
-    editImageView, mapImageView, complacencyImageView;
+    editImageView, mapImageView, complacencyImageView, checkmoneyImageView;
     private String idString;    // รับค่า Receive id ที่ user login อยู่
 
     @Override
@@ -50,11 +50,10 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
 
     public void onBackPressed() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("ออกจากระบบ");
         dialog.setIcon(R.drawable.icon_question);
         dialog.setCancelable(true);
-        dialog.setMessage("คุณต้องการออกจากระบบใช่หรือไม่ ?");
-        dialog.setPositiveButton("ออกจากระบบ", new DialogInterface.OnClickListener() {
+        dialog.setMessage("คุณต้องการจะปิดแอพพลิเคชั่น?");
+        dialog.setPositiveButton("ใช่", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Intent objIntent = new Intent(HubActivity.this, MainActivity.class);
                 startActivity(objIntent);
@@ -62,13 +61,13 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
             }
         });
 
-        dialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton("ไม่", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
 
-        dialog.show();
+                dialog.show();
     }
 
     private void syntborder() {
@@ -154,6 +153,7 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
         editImageView.setOnClickListener(this);
         mapImageView.setOnClickListener(this);
         complacencyImageView.setOnClickListener(this);
+        checkmoneyImageView.setOnClickListener(this);
     }
 
     private void bindWidget() {
@@ -162,6 +162,8 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
         editImageView = (ImageView) findViewById(R.id.imageView4);
         mapImageView = (ImageView) findViewById(R.id.imageView5);
         complacencyImageView = (ImageView) findViewById(R.id.imageView6);
+        checkmoneyImageView = (ImageView) findViewById(R.id.imageView10);
+
     }
 
     @Override
@@ -198,6 +200,13 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
                 // OrderHistory
                 checkHistory();
 
+                break;
+
+            case R.id.imageView10:
+                // checkmoney
+                Intent money = new Intent(HubActivity.this, CheckmoneyActivity.class);
+                money.putExtra("ID", idString);
+                startActivity(money);
 
                 break;
         }   //switch

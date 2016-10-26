@@ -37,19 +37,19 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void onBackPressed() {
         android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(this);
-        dialog.setTitle("ยกเลิกการสมัคร");
         dialog.setIcon(R.drawable.icon_question);
         dialog.setCancelable(true);
-        dialog.setMessage("คุณต้องการยกเลิกการสมัครใช่หรือไม่ ?");
+        dialog.setMessage("คุณต้องการยกเลิกการสมัคร?");
         dialog.setPositiveButton("ใช่", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Intent objIntent = new Intent(RegisterActivity.this, MainActivity.class);
                 startActivity(objIntent);
                 dialog.dismiss();
+
             }
         });
 
-        dialog.setNegativeButton("ไม่ใช่", new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton("ไม่", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
