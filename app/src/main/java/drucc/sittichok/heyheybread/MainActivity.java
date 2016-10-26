@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject object = objJsonArray.getJSONObject(i);
                     switch (intTimes) {
                         case 1: // userTABLE
-
+                            String strID7 = object.getString("id");
                             String strUser = object.getString(ManageTABLE.COLUMN_User);
                             String strPassword = object.getString(ManageTABLE.COLUMN_Password);
                             String strName = object.getString(ManageTABLE.COLUMN_Name);
@@ -149,34 +149,37 @@ public class MainActivity extends AppCompatActivity {
                             String strAddress = object.getString(ManageTABLE.COLUMN_Address);
                             String strPhone = object.getString(ManageTABLE.COLUMN_Phone);
                             String strBalance = object.getString(ManageTABLE.COLUMN_Balance);
-                            objManageTABLE.addNewUser(strUser, strPassword, strName, strSurname,
+                            objManageTABLE.addNewUser(strID7, strUser, strPassword, strName, strSurname,
                                     strAddress, strPhone, strBalance);
                             break;
 
                         case 2: // breadTABLE
+                            String strID3 = object.getString("id");
                             String strBread = object.getString(ManageTABLE.COLUMN_Bread);
                             String strPrice = object.getString(ManageTABLE.COLUMN_Price);
                             String strImage = object.getString(ManageTABLE.COLUMN_Image);
                             String strStatus = object.getString(ManageTABLE.COLUMN_Status);
-                            objManageTABLE.addNewBread(strBread, strPrice, strImage,strStatus);
+                            objManageTABLE.addNewBread(strID3, strBread, strPrice, strImage,strStatus);
                             break;
 
                         case 3: // tborder
+                            String strID2 = object.getString("id");
                             String strOrderDate = object.getString(ManageTABLE.COLUMN_OrderDate);
                             String strCustomerID = object.getString(ManageTABLE.COLUMN_CustomerID);
                             String strGrandTotal = object.getString(ManageTABLE.COLUMN_GrandTotal);
                             String strStatus1 = object.getString(ManageTABLE.COLUMN_Status);
-                            objManageTABLE.addtbOrder(strOrderDate, strCustomerID, strGrandTotal, strStatus1);
+                            objManageTABLE.addtbOrder(strID2, strOrderDate, strCustomerID, strGrandTotal, strStatus1);
                             break;
 
                         case 4: // tborderdetail
+                            String strID = object.getString("id");
                             String strOrderNo = object.getString(ManageTABLE.COLUMN_OrderNo);
                             String strOrderDetail_ID = object.getString(ManageTABLE.COLUMN_OrderDetail_ID);
                             String strProduct_ID = object.getString(ManageTABLE.COLUMN_Product_ID);
                             String strAmount2 = object.getString(ManageTABLE.COLUMN_Amount);
                             String strPrice2 = object.getString(ManageTABLE.COLUMN_Price);
                             String strPriceTotal = object.getString(ManageTABLE.COLUMN_PriceTotal);
-                            objManageTABLE.addtbOrderDetail(strOrderNo, strOrderDetail_ID, strProduct_ID,
+                            objManageTABLE.addtbOrderDetail(strID, strOrderNo, strOrderDetail_ID, strProduct_ID,
                                     strAmount2,strPrice2,strPriceTotal);
                             break;
                     }   //switch

@@ -102,13 +102,14 @@ public class OrderDetailActivity extends AppCompatActivity {
                     switch (intTimes) {
                         case 1: // tborderdetail
                             ManageTABLE objManageTABLE = new ManageTABLE(this);
+                            String strID = object.getString("id");
                             String strOrderNo = object.getString(ManageTABLE.COLUMN_OrderNo);
                             String strOrderDetail_ID = object.getString(ManageTABLE.COLUMN_OrderDetail_ID);
                             String strProduct_ID = object.getString(ManageTABLE.COLUMN_Product_ID);
                             String strAmount2 = object.getString(ManageTABLE.COLUMN_Amount);
                             String strPrice2 = object.getString(ManageTABLE.COLUMN_Price);
                             String strPriceTotal = object.getString(ManageTABLE.COLUMN_PriceTotal);
-                            objManageTABLE.addtbOrderDetail(strOrderNo, strOrderDetail_ID, strProduct_ID,
+                            objManageTABLE.addtbOrderDetail(strID, strOrderNo, strOrderDetail_ID, strProduct_ID,
                                     strAmount2,strPrice2,strPriceTotal);
                             break;
                     }

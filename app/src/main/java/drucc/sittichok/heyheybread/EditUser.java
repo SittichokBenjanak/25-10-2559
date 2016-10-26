@@ -112,7 +112,7 @@ public class EditUser extends AppCompatActivity {
                     switch (intTimes) {
                         case 1: // userTABLE
                             ManageTABLE objManageTABLE = new ManageTABLE(this);
-
+                            String strID6 = object.getString("id");
                             String strUser = object.getString(ManageTABLE.COLUMN_User);
                             String strPassword = object.getString(ManageTABLE.COLUMN_Password);
                             String strName = object.getString(ManageTABLE.COLUMN_Name);
@@ -120,7 +120,7 @@ public class EditUser extends AppCompatActivity {
                             String strAddress = object.getString(ManageTABLE.COLUMN_Address);
                             String strPhone = object.getString(ManageTABLE.COLUMN_Phone);
                             String strBalance = object.getString(ManageTABLE.COLUMN_Balance);
-                            objManageTABLE.addNewUser(strUser, strPassword, strName, strSurname,
+                            objManageTABLE.addNewUser(strID6, strUser, strPassword, strName, strSurname,
                                     strAddress, strPhone, strBalance);
                             break;
                     }   //switch

@@ -23,7 +23,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/linSave"
         android:layout_margin="15dp"
         android:background="#96ffffff"
         android:padding="15dp"

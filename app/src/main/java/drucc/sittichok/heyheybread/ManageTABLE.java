@@ -55,7 +55,8 @@ public class ManageTABLE {
 
     } //Constructor
 
-    public long addtbOrderDetail(String strOrderNo,
+    public long addtbOrderDetail(String strID,
+                                 String strOrderNo,
                                  String strOrderDetail_ID,
                                  String strProduct_ID,
                                  String strAmount,
@@ -65,6 +66,7 @@ public class ManageTABLE {
         ContentValues objContentValues = new ContentValues();
         //ContentValues คือ obj ที่ใช้ในการเชื่อมต่อฐานข้อมูล มันคือตัวกลาง
 
+        objContentValues.put(COLUMN_id, strID);
         objContentValues.put(COLUMN_OrderNo, strOrderNo);
         objContentValues.put(COLUMN_OrderDetail_ID,strOrderDetail_ID);
         objContentValues.put(COLUMN_Product_ID,strProduct_ID);
@@ -75,14 +77,15 @@ public class ManageTABLE {
         return writeSqLiteDatabase.insert(TABLE_TBORDER_DETAIL,null,objContentValues);
     }   // addtbOrderDetail
 
-    public long addtbOrder(String strorderdate,
+    public long addtbOrder(       String strID,
+                                  String strorderdate,
                                   String strCustomerID,
                                   String strGrandTotal,
                                   String strStatus) {
 
         ContentValues objContentValues = new ContentValues();
         //ContentValues คือ obj ที่ใช้ในการเชื่อมต่อฐานข้อมูล มันคือตัวกลาง
-
+        objContentValues.put(COLUMN_id, strID);
         objContentValues.put(COLUMN_OrderDate, strorderdate);
         objContentValues.put(COLUMN_CustomerID,strCustomerID);
         objContentValues.put(COLUMN_GrandTotal,strGrandTotal);
@@ -182,7 +185,8 @@ public class ManageTABLE {
     }   //searchUser
 
 
-    public long addNewOrder(String strName,
+    public long addNewOrder(
+                            String strName,
                             String strDate,
                             String strSurname,
                             String strAddress,
@@ -207,12 +211,14 @@ public class ManageTABLE {
     }   // addNewOrder
 
 
-    public long addNewBread(String strBread,
+    public long addNewBread(String strID3,
+                            String strBread,
                             String strPrice,
                             String strImage,
                             String strStatus) {
         ContentValues objContentValues = new ContentValues();
         //ContentValues คือ obj ที่ใช้ในการเชื่อมต่อฐานข้อมูล มันคือตัวกลาง
+        objContentValues.put(COLUMN_id,strID3);
         objContentValues.put(COLUMN_Bread,strBread);
         objContentValues.put(COLUMN_Price,strPrice);
         objContentValues.put(COLUMN_Image,strImage);
@@ -222,6 +228,7 @@ public class ManageTABLE {
     }   // addNewBread
 
     public long addNewUser(
+                           String strID4,
                            String strUser,
                            String strPassword,
                            String strName,
@@ -231,7 +238,7 @@ public class ManageTABLE {
                            String strBalance) {
         ContentValues objContentValues = new ContentValues();
         //ContentValues คือ obj ที่ใช้ในการเชื่อมต่อฐานข้อมูล มันคือตัวกลาง
-
+        objContentValues.put(COLUMN_id, strID4);
         objContentValues.put(COLUMN_User,strUser);
         objContentValues.put(COLUMN_Password,strPassword);
         objContentValues.put(COLUMN_Name,strName);

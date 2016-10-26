@@ -116,11 +116,12 @@ public class HistoryActivity extends AppCompatActivity {
                     switch (intTimes) {
                         case 1:
                             ManageTABLE objManageTABLE = new ManageTABLE(this);
+                            String strID2 = object.getString("id");
                             String strOrderDate = object.getString(ManageTABLE.COLUMN_OrderDate);
                             String strCustomerID = object.getString(ManageTABLE.COLUMN_CustomerID);
                             String strGrandTotal = object.getString(ManageTABLE.COLUMN_GrandTotal);
                             String strStatus1 = object.getString(ManageTABLE.COLUMN_Status);
-                            objManageTABLE.addtbOrder(strOrderDate, strCustomerID, strGrandTotal, strStatus1);
+                            objManageTABLE.addtbOrder(strID2 ,strOrderDate, strCustomerID, strGrandTotal, strStatus1);
                             break;
                     }
 
