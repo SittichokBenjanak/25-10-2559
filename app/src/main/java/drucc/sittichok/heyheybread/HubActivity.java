@@ -1,9 +1,11 @@
 package drucc.sittichok.heyheybread;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.StrictMode;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,7 +44,33 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
 
         //Image Controller
         imageController();
+
+
     }   // onCreate
+
+    public void onBackPressed() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("ออกจากระบบ");
+        dialog.setIcon(R.drawable.icon_question);
+        dialog.setCancelable(true);
+        dialog.setMessage("คุณต้องการออกจากระบบใช่หรือไม่ ?");
+        dialog.setPositiveButton("ออกจากระบบ", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent objIntent = new Intent(HubActivity.this, MainActivity.class);
+                startActivity(objIntent);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
+    }
+
     private void syntborder() {
         StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(threadPolicy);
@@ -197,7 +225,7 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
         Cursor objCursor = objSqLiteDatabase.rawQuery("SELECT * FROM " + ManageTABLE.TABLE_ORDER, null);
         if (objCursor.getCount() > 0) {
             Intent objIntent = new Intent(HubActivity.this, ConfirmOrderActivity.class);
-            objIntent.putExtra("Status", true);
+            objIntent.putExtra("idUser", idString);
             startActivity(objIntent);
         } else {
             MyAlertDialog objMyAlertDialog = new MyAlertDialog();

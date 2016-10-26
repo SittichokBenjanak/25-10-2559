@@ -46,9 +46,21 @@ public class showMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_menu);
 
+        //deleteBead
+        deleteBead();
+
         //Synchronize breadTABLE
         synBreadTABLE();
+
     }   //  onCreate
+
+    private void deleteBead() {
+
+        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
+                MODE_PRIVATE, null);
+        objSqLiteDatabase.delete(ManageTABLE.TABLE_BREAD, null, null);
+
+    }   // deleteBead
 
     // Create Inner Class
     public class MyConnectedBread extends AsyncTask<Void, Void, String> {

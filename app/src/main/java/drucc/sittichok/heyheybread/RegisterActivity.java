@@ -35,6 +35,29 @@ public class RegisterActivity extends AppCompatActivity {
         bindWidget();
     }   // onCreate
 
+    public void onBackPressed() {
+        android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(this);
+        dialog.setTitle("ยกเลิกการสมัคร");
+        dialog.setIcon(R.drawable.icon_question);
+        dialog.setCancelable(true);
+        dialog.setMessage("คุณต้องการยกเลิกการสมัครใช่หรือไม่ ?");
+        dialog.setPositiveButton("ใช่", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent objIntent = new Intent(RegisterActivity.this, MainActivity.class);
+                startActivity(objIntent);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setNegativeButton("ไม่ใช่", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
+    }
+
     private boolean checkUser() {
         try {
             // Have This User in my Database ถ้ามี User ในฐานข้อมูล
