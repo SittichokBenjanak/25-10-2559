@@ -171,7 +171,7 @@ public class showMenuActivity extends AppCompatActivity {
                 // update to SQLite พักไว้ที่ SQLite ยังไม่ขึ้นไปที่ mySQL
                 UpdateOrderToSQLit(breadString, priceString, intItem);
                 dialogInterface.dismiss();
-                synBreadTABLE();
+                //synBreadTABLE();
             }   // event
         });
         objBuilder.show();

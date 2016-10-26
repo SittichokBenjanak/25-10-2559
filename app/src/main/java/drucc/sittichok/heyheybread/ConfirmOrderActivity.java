@@ -25,6 +25,8 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -34,12 +36,15 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class ConfirmOrderActivity extends AppCompatActivity {
     // Explicit
-    private TextView dateTextView, nameTextView,addressTextView,
+    private TextView dateTextView, nameTextView,statusTextView,
             totalTextView,numberorderTextView;
     private String dateString,nameString,surnameString;
     private ListView orderListView;
@@ -50,6 +55,10 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private int orderDetailAnInt = 0;
     private String strOrderNumber ;
 
+    private ManageTABLE objManageTABLE;
+    private String Balane;
+
+
 
 
 
@@ -58,9 +67,16 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
 
-        strIDuser = getIntent().getStringExtra("idUser");
+        // synUserTable
+        sysJSON();
+
         // Bind Widget  กำหนตตำแหน่งในรายละเอียดการสั่งซื้อ
         bindWidget();
+
+
+        strIDuser = getIntent().getStringExtra("idUser");
+
+        balance();
 
         // Read All Data  นำค่าที่ลูกค้าสั่งมาแสดง และ ส่งค่า ชื่อ นามสกุล ที่ อยู่ เบอร์ โทร ของ ลูกค้า และรายการที่สั่ง
         readAllData();
@@ -76,16 +92,120 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
     }   // Main Method
 
+    private void balance() {
+
+        String strID = getIntent().getStringExtra("idUser");
+
+        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
+                MODE_PRIVATE, null);
+        Cursor objCursor = objSqLiteDatabase.rawQuery("SELECT * FROM userTABLE WHERE _id = " + "'" + strID + "'", null);
+        objCursor.moveToFirst();
+        String[] resultStrings = new String[objCursor.getColumnCount()];
+        for (int i=0; i<objCursor.getColumnCount(); i++) {
+            resultStrings[i] = objCursor.getString(i);
+        }   //for
+
+        Balane = resultStrings[7]; // รับค่า ชื่อ
+
+        objCursor.close();
+
+    }   // balance
+
+    private void sysJSON() {
+        // set up policy
+        StrictMode.ThreadPolicy myPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(myPolicy);
+
+        // Loop 1 Times
+        int intTimes = 1;
+        while (intTimes <= 1) {
+
+            // Variable & Constant
+            InputStream objInputStream = null;
+            String strJSON = null;
+            String strUserURL = "http://www.fourchokcodding.com/mos/php_get_user.php";
+            HttpPost objHttpPost = null;
+
+            // 1. Create InputStream
+            try {
+                HttpClient objHttpClient = new DefaultHttpClient();
+                switch (intTimes) {
+                    case 1:
+                        objHttpPost = new HttpPost(strUserURL);
+                        break;
+                }
+                HttpResponse objHttpResponse = objHttpClient.execute(objHttpPost);
+                HttpEntity objHttpEntity = objHttpResponse.getEntity();
+                objInputStream = objHttpEntity.getContent();
+
+            } catch (Exception e) {
+                Log.d("hey", "InputStream ==> " + e.toString());
+
+            }
+
+
+            // 2. Create strJSON
+
+            try {
+                BufferedReader objBufferedReader = new BufferedReader(new InputStreamReader(objInputStream, "UTF-8"));
+                StringBuilder objStringBuilder = new StringBuilder();
+                String strLine = null;
+                while ((strLine = objBufferedReader.readLine()) != null) {
+                    objStringBuilder.append(strLine);
+                }
+                objInputStream.close();
+                strJSON = objStringBuilder.toString();
+
+            } catch (Exception e) {
+                Log.d("hey", "strJSON ==> " + e.toString());
+            }
+
+            // 3. Update to SQLite
+
+            try {
+                JSONArray objJsonArray = new JSONArray(strJSON);
+                for (int i = 0; i < objJsonArray.length(); i++) {
+                    JSONObject jsonObject = objJsonArray.getJSONObject(i);
+                    switch (intTimes) {
+                        case 1:
+                            String strUser = jsonObject.getString(ManageTABLE.COLUMN_User);
+                            String strPassword = jsonObject.getString(ManageTABLE.COLUMN_Password);
+                            String strName = jsonObject.getString(ManageTABLE.COLUMN_Name);
+                            String strSurname = jsonObject.getString(ManageTABLE.COLUMN_Surname);
+                            String strAddress = jsonObject.getString(ManageTABLE.COLUMN_Address);
+                            String strPhone = jsonObject.getString(ManageTABLE.COLUMN_Phone);
+                            String strBalance = jsonObject.getString(ManageTABLE.COLUMN_Balance);
+                            objManageTABLE.addNewUser(strUser, strPassword, strName, strSurname,
+                                    strAddress, strPhone, strBalance);
+                            break;
+                    }
+
+                }
+
+            } catch (Exception e) {
+                Log.d("Hey", "Update SQLite ==>" + e.toString());
+
+            }
+
+            intTimes += 1;
+
+        }   // While
+
+
+
+    }   // sysJSON
+
     private void orderNumber() {
 
         SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
                 MODE_PRIVATE, null);
         Cursor cursor = objSqLiteDatabase.rawQuery("SELECT * FROM " + ManageTABLE.TABLE_TBORDER, null);
-        cursor.moveToFirst();
         cursor.moveToLast();
         strOrderNumber = cursor.getString(cursor.getColumnIndex(ManageTABLE.COLUMN_id));
         int intOrderNumber = Integer.parseInt(strOrderNumber)+1;
         strOrderNumber = Integer.toString(intOrderNumber);
+
+        cursor.close();
 
     }   // orderNumber
 
@@ -128,103 +248,116 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     } // findLastOrderNo
 
     public void clickFinish(View view) {
-        Log.d("12April", "clickFinish OrderNo ล่าสุดที่อ่าได้ ==> " + strOrderNo);
-        //Read All orderTABLE
-        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME, // เปิดฐานข้อมูล
-                MODE_PRIVATE, null);
-        Cursor objCursor = objSqLiteDatabase.rawQuery("SELECT * FROM " + ManageTABLE.TABLE_ORDER, null);  // เลือกOrder ที่ลูกค้าสั่งทั้งหมด
-        objCursor.moveToFirst();  // moveToFirst ให้เลือกตำแหน่ง ของข้อมูล Order อยู่บนสุด
 
-        //**********************************************************************************************************************
-        // Update Stock
-        //**********************************************************************************************************************
+        int intBalane = Integer.parseInt(Balane);
 
-        for (int i =0; i<objCursor.getCount();i++) {    // นำOrder มานับแถว ถ้ามีข้อมูล ให้ทำ
-            strDate = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Date));  // รับค่า เวลา
-            String strBread = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Bread)); // รับค่าชื่อขนมปัง
-            String strPrice = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Price)); // รับค่าราคา
-            String strItem = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Item)); // รับค่าไอเทม
+        if (totalAnInt > intBalane) {
+            MyAlertDialog objMyAlertDialog = new MyAlertDialog();
+            objMyAlertDialog.errorDialog(ConfirmOrderActivity.this, "ยอดเงินไม่พอ", "กรุณาเติมเงินก่อน");
 
-            // Update to mySQL
-            StrictMode.ThreadPolicy myPolicy = new StrictMode.ThreadPolicy
-                    .Builder().permitAll().build();
-            StrictMode.setThreadPolicy(myPolicy);   // อนุญาตืให้ myPolicy เชื่อมต่อ โปรโตคอล ได้
+        } else {
 
-            if (i == (objCursor.getCount() - 1) ) {
-                Toast.makeText(ConfirmOrderActivity.this,"สั่งซื้อสินค้าสำเร็จ", // โชว์ข้อความการยืนยัน 3.5 วินาที
-                        Toast.LENGTH_SHORT).show();
-            }   // if
-
-            try {
-                //Find Id Bread
-                ManageTABLE objManageTABLE = new ManageTABLE(this);
-                String[] resultStrings = objManageTABLE.SearchBread(strBread);
-                Log.d("11April", "id bread ที่สั่งได้ " + strBread + " " + resultStrings[0]);
-
-            } catch (Exception e) {
-                Log.d("16Feb", "Cannot Delete Stock");
-
-            }// end of TryCase 2
-            objCursor.moveToNext(); // ทำต่อ
-
-            //**********************************************************************************************************************
-            // Update tborderDetail
-            //**********************************************************************************************************************
-
-            // Update to tborderdetail on Server
             Log.d("12April", "clickFinish OrderNo ล่าสุดที่อ่าได้ ==> " + strOrderNo);
-            int intOrderNo = Integer.parseInt(strOrderNo)+ 1;
-            String strNextOrderNo = Integer.toString(intOrderNo);
+            //Read All orderTABLE
+            SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME, // เปิดฐานข้อมูล
+                    MODE_PRIVATE, null);
+            Cursor objCursor = objSqLiteDatabase.rawQuery("SELECT * FROM " + ManageTABLE.TABLE_ORDER, null);  // เลือกOrder ที่ลูกค้าสั่งทั้งหมด
+            objCursor.moveToFirst();  // moveToFirst ให้เลือกตำแหน่ง ของข้อมูล Order อยู่บนสุด
+
+            //**********************************************************************************************************************
+            // Update Stock
+            //**********************************************************************************************************************
+
+            for (int i =0; i<objCursor.getCount();i++) {    // นำOrder มานับแถว ถ้ามีข้อมูล ให้ทำ
+                strDate = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Date));  // รับค่า เวลา
+                String strBread = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Bread)); // รับค่าชื่อขนมปัง
+                String strPrice = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Price)); // รับค่าราคา
+                String strItem = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Item)); // รับค่าไอเทม
+
+                // Update to mySQL
+                StrictMode.ThreadPolicy myPolicy = new StrictMode.ThreadPolicy
+                        .Builder().permitAll().build();
+                StrictMode.setThreadPolicy(myPolicy);   // อนุญาตืให้ myPolicy เชื่อมต่อ โปรโตคอล ได้
+
+                if (i == (objCursor.getCount() - 1) ) {
+                    Toast.makeText(ConfirmOrderActivity.this,"สั่งซื้อสินค้าสำเร็จ", // โชว์ข้อความการยืนยัน 3.5 วินาที
+                            Toast.LENGTH_SHORT).show();
+                }   // if
+
+                try {
+                    //Find Id Bread
+                    ManageTABLE objManageTABLE = new ManageTABLE(this);
+                    String[] resultStrings = objManageTABLE.SearchBread(strBread);
+                    Log.d("11April", "id bread ที่สั่งได้ " + strBread + " " + resultStrings[0]);
+
+                } catch (Exception e) {
+                    Log.d("16Feb", "Cannot Delete Stock");
+
+                }// end of TryCase 2
+                objCursor.moveToNext(); // ทำต่อ
+
+                //**********************************************************************************************************************
+                // Update tborderDetail
+                //**********************************************************************************************************************
+
+                // Update to tborderdetail on Server
+                Log.d("12April", "clickFinish OrderNo ล่าสุดที่อ่าได้ ==> " + strOrderNo);
+                int intOrderNo = Integer.parseInt(strOrderNo)+ 1;
+                String strNextOrderNo = Integer.toString(intOrderNo);
 
 
-            orderDetailAnInt += 1;
-            Log.d("12April", "OrderDetailID(" + (i + 1) +")" + orderDetailAnInt);
-            String strOrderDetail = Integer.toString(orderDetailAnInt);
+                orderDetailAnInt += 1;
+                Log.d("12April", "OrderDetailID(" + (i + 1) +")" + orderDetailAnInt);
+                String strOrderDetail = Integer.toString(orderDetailAnInt);
 
-            String strProductID = findProductID(strBread);
+                String strProductID = findProductID(strBread);
 
-            Log.d("12April", strBread + " มี id = " + strProductID);
+                Log.d("12April", strBread + " มี id = " + strProductID);
 
-            int intAmount = Integer.parseInt(strItem);
-            int intPrice = Integer.parseInt(strPrice);
-            int PriceTotal = intAmount * intPrice ;
-            String strPriceTotal = Integer.toString(PriceTotal);
+                int intAmount = Integer.parseInt(strItem);
+                int intPrice = Integer.parseInt(strPrice);
+                int PriceTotal = intAmount * intPrice ;
+                String strPriceTotal = Integer.toString(PriceTotal);
 
-            Log.d("12April", "Amount * Price = " + intAmount + "x" + intPrice + " = " + PriceTotal);
+                Log.d("12April", "Amount * Price = " + intAmount + "x" + intPrice + " = " + PriceTotal);
 
-            updateTotborderdetail(strNextOrderNo,
-                    strOrderDetail,
-                    strProductID,
-                    strItem,
-                    strPrice,
-                    strPriceTotal);
+                updateTotborderdetail(strNextOrderNo,
+                        strOrderDetail,
+                        strProductID,
+                        strItem,
+                        strPrice,
+                        strPriceTotal);
 
-        }   // for
-        objCursor.close(); // คืนหน่วยความจำ
+            }   // for
+            objCursor.close(); // คืนหน่วยความจำ
 
-        //**********************************************************************************************************************
-        // จุดเปลี่ยน
-        //**********************************************************************************************************************
+            //**********************************************************************************************************************
+            // จุดเปลี่ยน
+            //**********************************************************************************************************************
 
 
-        // Update tborder on Server
-        updateTotborder(strDate,
-                strIDuser,
-                Integer.toString(totalAnInt),
-                "กำลังจัดเตรียมสินค้า");
+            // Update tborder on Server
+            updateTotborder(strDate,
+                    strIDuser,
+                    Integer.toString(totalAnInt),
+                    "จัดเตรียม");
 
-        // Intent HubActivity
-        Intent objIntent = new Intent(ConfirmOrderActivity.this, HubActivity.class);
-        // ทำเสร็จแล้ว ให้ กลับไปหน้า HubActivity.class
-        String strID = getIntent().getStringExtra("idUser");
-        objIntent.putExtra("ID", strID); //แล้วส่งค่า ID คืนไปที่หน้า HubActivity.class ด้วย
+            // Intent HubActivity
+            Intent objIntent = new Intent(ConfirmOrderActivity.this, HubActivity.class);
+            // ทำเสร็จแล้ว ให้ กลับไปหน้า HubActivity.class
+            String strID = getIntent().getStringExtra("idUser");
+            objIntent.putExtra("ID", strID); //แล้วส่งค่า ID คืนไปที่หน้า HubActivity.class ด้วย
 
-        Log.d("19Feb", "ID ที่ได้ ==> " + strID);
+            Log.d("19Feb", "ID ที่ได้ ==> " + strID);
 
-        startActivity(objIntent);
+            startActivity(objIntent);
 
-        //Delete OrderTABLE
-        objSqLiteDatabase.delete(ManageTABLE.TABLE_ORDER,null,null);
+            //Delete OrderTABLE
+            objSqLiteDatabase.delete(ManageTABLE.TABLE_ORDER,null,null);
+
+        }
+
+
 
     }   // clickFinish
 
@@ -328,7 +461,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         numberorderTextView.setText("เลขที่สั่งซื้อ : " + strOrderNumber );
         dateTextView.setText("วันที่สั่งซื้อ : " + dateString); // นำค่า Date ใส่ไปใน dateTextView
         nameTextView.setText("ผู้สั่งซื้อ : " + nameString + " " + surnameString); // นำค่า ชื่อ กัย นามสกุล ใส่ไปใน nameTextView
-        addressTextView.setText("สถานะ : " + "รอชำระเงิน"); // นำค่า ที่อยู่  ใส่ไปใน addressTextView
+        statusTextView.setText("ยอดเงินคงเหลือ : " + Balane); // นำค่า ที่อยู่  ใส่ไปใน addressTextView
 //        phoneTextView.setText("เบอร์โทรศีพท์ : " + phoneString );    // นำค่า เบอร์โทร ใส่ไปใน phoneTextView
         totalTextView.setText(Integer.toString(totalAnInt) + "      บาท"); // นำค่า ราคารวมทั้งหมด ใส่ไปใน totalTextView
     }   // showView
@@ -387,8 +520,6 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                     objIntent.putExtra("ID", strIDuser);
                     startActivity(objIntent);
                 }
-
-
 
             } // event
         });
@@ -453,7 +584,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
         dateTextView = (TextView) findViewById(R.id.textView19);  // ตำแหน่ง เวลา
         nameTextView = (TextView) findViewById(R.id.textView20);  // ตำแหน่ง ชื่อ
-        addressTextView = (TextView) findViewById(R.id.textView21); // ตำแหน่งที่อยู่
+        statusTextView = (TextView) findViewById(R.id.textView21); // ตำแหน่งที่อยู่
 //        phoneTextView = (TextView) findViewById(R.id.textView22); // ตำแหน่งเบอร์
         totalTextView = (TextView) findViewById(R.id.textView23); // ตำแหน่งราคารวม
         orderListView = (ListView) findViewById(R.id.listView2); // ตำแหน่งรายการสินค้าที่ลูกค้าสั่งซื้อ
