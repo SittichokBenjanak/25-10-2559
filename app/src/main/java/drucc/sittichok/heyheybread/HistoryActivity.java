@@ -47,14 +47,14 @@ public class HistoryActivity extends AppCompatActivity {
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    private GoogleApiClient client;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+
         strID = getIntent().getStringExtra("ID");
+
         deleteOrder();
         syntborder();
 
@@ -62,10 +62,6 @@ public class HistoryActivity extends AppCompatActivity {
 
         readAllorder();
 
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }   // onCreate
 
     private void syntborder() {
@@ -179,114 +175,18 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                ShowDialog(NumberOrder[i]);
-
-//               Intent objIntent = new Intent(HistoryActivity.this, OrderDetailActivity.class);
-////                objIntent.putExtra("ID", strID);
-////                objIntent.putExtra("ORDER", NumberOrder);
-//                startActivity(objIntent);
+                Intent objIntent = new Intent(HistoryActivity.this, OrderDetailActivity.class);
+                objIntent.putExtra("ID", strID);
+                objIntent.putExtra("NO", NumberOrder[i]);
+                startActivity(objIntent);
             }
         });
 
 
     }   // readAllorder
 
-    private void ShowDialog(final String NumberOrder) {
-
-        AlertDialog.Builder objBuilder = new AlertDialog.Builder(this);
-        objBuilder.setIcon(R.drawable.icon_myaccount);
-        objBuilder.setTitle("เลือกสิ่งที่ต้องการ");  // หัวข้อ
-        objBuilder.setMessage("1.เลือกเพิ่มรูปภาพ คือ การเพิ่มรูปภาพ เพื่อยืนยันการชำระเงิน" +"\n" +
-                "2.เลือกรายละเอียดการสั่งซื้อ คือ การดูรายละเอียดของการสังซื้อ");
-        objBuilder.setPositiveButton("ดูรายละเอียดการสั่งซื้อ", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                ChooseOrder(NumberOrder);
-                dialogInterface.dismiss();
-            }
-        });
-
-        objBuilder.setNegativeButton("เพิ่มรูปภาพการชำระเงิน", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                showPickPictureDialog();
-
-                dialogInterface.dismiss();
-
-            }
-        });
-        objBuilder.show();
-
-    }   // ShowDialog
-
-    private final static int PICK_IMAGE = 1;
-    private String imageFilePath;
-
-    private void showPickPictureDialog() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"เลือกรูปภาพ"),PICK_IMAGE);
-
-    }   // showPickPictureDialog
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
 
-        if (requestCode == PICK_IMAGE && data != null && data.getData() != null) {
-            Uri uri = data.getData();
-
-            if (uri != null) {
-                Cursor cursor = getContentResolver().query(
-                        uri, new String[]{ MediaStore.Images.ImageColumns.DATA
-
-                        },null,null,null
-                );
-                cursor.moveToFirst();
-
-                imageFilePath = cursor.getString(0);
-
-                showConfirmPostPictureDialog();
-                cursor.close();
-
-            }
-        }
-    }   // onActivityResult
-
-    private void showConfirmPostPictureDialog() {
-        Bitmap picture = BitmapFactory.decodeFile(imageFilePath);
-
-        final ImageView imageView = new ImageView(this);
-        imageView.setImageBitmap(picture);
-
-        AlertDialog.Builder objBuilder = new AlertDialog.Builder(this);
-        objBuilder.setTitle("อัฟเดทรูปภาพเข้าระบบ");
-        objBuilder.setView(imageView);
-        objBuilder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-
-
-            }
-        }).setNegativeButton("ยกเลิก",null);
-        objBuilder.show();
-
-
-
-    }   // showConfirmPostPictureDialog
-
-    private void ChooseOrder(final String NumberOrder) {
-
-        Intent objIntent = new Intent(HistoryActivity.this, OrderDetailActivity.class);
-        objIntent.putExtra("NO",NumberOrder);
-        startActivity(objIntent);
-
-    }   // ChooseOrder
 
 
     private void bindWidget() {

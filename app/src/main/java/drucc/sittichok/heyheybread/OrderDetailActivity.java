@@ -25,7 +25,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     // Explicit
     private String strID;
     private ListView detailListView;
-    private String noString,nameString,amountString,priceString, sumpriceString;
+    // private String noString,nameString,amountString,priceString, sumpriceString;
     private String strOrderID;
 
 
@@ -36,7 +36,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order_detail);
         try {
 
-//            strID = getIntent().getStringExtra("ID");
+            strID = getIntent().getStringExtra("ID");
             strOrderID = getIntent().getStringExtra("NO");
             Log.d("hey","strOrderID ==> "+ strOrderID );
 
