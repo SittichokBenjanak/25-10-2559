@@ -54,8 +54,6 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private String strOrderNo;
     private int orderDetailAnInt = 0;
     private String strOrderNumber ;
-
-    private ManageTABLE objManageTABLE;
     private String Balane;
 
 
@@ -67,11 +65,6 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
 
-        // deletesynUserTable
-        deleteUser();
-
-        // synUserTable
-        synUserTABLE();
 
         // Bind Widget  กำหนตตำแหน่งในรายละเอียดการสั่งซื้อ
         bindWidget();
@@ -95,14 +88,10 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
     }   // Main Method
 
-    private void deleteUser() {
-
-        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
-                MODE_PRIVATE, null);
-        objSqLiteDatabase.delete(ManageTABLE.TABLE_USER, null, null);
 
 
-    }   // deleteUser
+
+
 
     private void balance() {
 
@@ -123,70 +112,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
     }   // balance
 
-    private void synUserTABLE() {
-        StrictMode.ThreadPolicy myPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(myPolicy);   //เปิดโปรโตรคอลให้แอพเชื่อมต่ออินเตอร์เน็ตได้ ใช้ได้ทั้งหมด โดยใช้คำสั่ง permitAll
-        int intTimes = 1;
-        while (intTimes <= 1) {
-            InputStream objInputStream = null;
-            String strJSON = null;
-            String strURLuser = "http://www.fourchokcodding.com/mos/php_get_user.php";
-            HttpPost objHttpPost = null;
-            //1. Create InputStream
-            try {
-                HttpClient objHttpClient = new DefaultHttpClient();
-                switch (intTimes) {
-                    case 1:
-                        objHttpPost = new HttpPost(strURLuser);
-                        break;
-                }   // switch
-                HttpResponse objHttpResponse = objHttpClient.execute(objHttpPost);
-                HttpEntity objHttpEntity = objHttpResponse.getEntity();
-                objInputStream = objHttpEntity.getContent();
-            } catch (Exception e) {
-                Log.d("sss", "InputStream ==> " + e.toString());
-            }
-            //2. Create JSON String
-            try {
-                BufferedReader objBufferedReader = new BufferedReader(new InputStreamReader(objInputStream,"UTF-8"));
-                StringBuilder objStringBuilder = new StringBuilder();
-                String strLine = null;
-                while ((strLine = objBufferedReader.readLine()) != null) {
-                    objStringBuilder.append(strLine);
-                }   //while
-                objInputStream.close();
-                strJSON = objStringBuilder.toString();
-            } catch (Exception e) {
-                Log.d("sss", "strJSON ==> " + e.toString());
-            }
 
-            //3. Update JSON String to SQLite
-            try {
-                JSONArray objJsonArray = new JSONArray(strJSON);
-                for (int i=0; i<objJsonArray.length();i++) {
-                    JSONObject object = objJsonArray.getJSONObject(i);
-                    switch (intTimes) {
-                        case 1: // userTABLE
-                            ManageTABLE objManageTABLE = new ManageTABLE(this);
-                            String strID5 = object.getString("id");
-                            String strUser = object.getString(ManageTABLE.COLUMN_User);
-                            String strPassword = object.getString(ManageTABLE.COLUMN_Password);
-                            String strName = object.getString(ManageTABLE.COLUMN_Name);
-                            String strSurname = object.getString(ManageTABLE.COLUMN_Surname);
-                            String strAddress = object.getString(ManageTABLE.COLUMN_Address);
-                            String strPhone = object.getString(ManageTABLE.COLUMN_Phone);
-                            String strBalance = object.getString(ManageTABLE.COLUMN_Balance);
-                            objManageTABLE.addNewUser(strID5, strUser, strPassword, strName, strSurname,
-                                    strAddress, strPhone, strBalance);
-                            break;
-                    }   //switch
-                }
-            } catch (Exception e) {
-                Log.d("sss", "Update ==> " + e.toString());
-            }
-            intTimes += 1;
-        }   //while
-    }   // synJSONtoSQLite
 
     private void orderNumber() {
 
@@ -272,11 +198,6 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                         .Builder().permitAll().build();
                 StrictMode.setThreadPolicy(myPolicy);   // อนุญาตืให้ myPolicy เชื่อมต่อ โปรโตคอล ได้
 
-                if (i == (objCursor.getCount() - 1) ) {
-                    Toast.makeText(ConfirmOrderActivity.this,"สั่งซื้อสินค้าสำเร็จ", // โชว์ข้อความการยืนยัน 3.5 วินาที
-                            Toast.LENGTH_SHORT).show();
-                }   // if
-
                 try {
                     //Find Id Bread
                     ManageTABLE objManageTABLE = new ManageTABLE(this);
@@ -287,7 +208,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                     Log.d("16Feb", "Cannot Delete Stock");
 
                 }// end of TryCase 2
-                objCursor.moveToNext(); // ทำต่อ
+
 
                 //**********************************************************************************************************************
                 // Update tborderDetail
@@ -321,6 +242,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                         strPrice,
                         strPriceTotal);
 
+                objCursor.moveToNext(); // ทำต่อ
+
             }   // for
             objCursor.close(); // คืนหน่วยความจำ
 
@@ -347,6 +270,9 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
             //Delete OrderTABLE
             objSqLiteDatabase.delete(ManageTABLE.TABLE_ORDER,null,null);
+
+            Toast.makeText(ConfirmOrderActivity.this,"สั่งซื้อสินค้าสำเร็จ", // โชว์ข้อความการยืนยัน 3.5 วินาที
+                    Toast.LENGTH_SHORT).show();
 
         }
 

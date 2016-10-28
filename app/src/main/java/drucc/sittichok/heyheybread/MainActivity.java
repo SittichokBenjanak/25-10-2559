@@ -86,13 +86,10 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy myPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(myPolicy);   //เปิดโปรโตรคอลให้แอพเชื่อมต่ออินเตอร์เน็ตได้ ใช้ได้ทั้งหมด โดยใช้คำสั่ง permitAll
         int intTimes = 1;
-        while (intTimes <= 4) {
+        while (intTimes <= 1) {
             InputStream objInputStream = null;
             String strJSON = null;
             String strURLuser = "http://www.fourchokcodding.com/mos/php_get_user.php";
-            String strURLbread = "http://www.fourchokcodding.com/mos/php_get_bread.php";
-            String strURLtborder = "http://www.fourchokcodding.com/mos/php_get_tborder.php";
-            String strURLtborderDetail = "http://www.fourchokcodding.com/mos/php_get_tborderdetail.php";
             HttpPost objHttpPost = null;
             //1. Create InputStream
             try {
@@ -102,17 +99,6 @@ public class MainActivity extends AppCompatActivity {
                         objHttpPost = new HttpPost(strURLuser);
                         break;
 
-                    case 2:
-                        objHttpPost = new HttpPost(strURLbread);
-                        break;
-
-                    case 3:
-                        objHttpPost = new HttpPost(strURLtborder);
-                        break;
-
-                    case 4:
-                        objHttpPost = new HttpPost(strURLtborderDetail);
-                        break;
                 }   // switch
                 HttpResponse objHttpResponse = objHttpClient.execute(objHttpPost);
                 HttpEntity objHttpEntity = objHttpResponse.getEntity();
@@ -153,35 +139,6 @@ public class MainActivity extends AppCompatActivity {
                                     strAddress, strPhone, strBalance);
                             break;
 
-                        case 2: // breadTABLE
-                            String strID3 = object.getString("id");
-                            String strBread = object.getString(ManageTABLE.COLUMN_Bread);
-                            String strPrice = object.getString(ManageTABLE.COLUMN_Price);
-                            String strImage = object.getString(ManageTABLE.COLUMN_Image);
-                            String strStatus = object.getString(ManageTABLE.COLUMN_Status);
-                            objManageTABLE.addNewBread(strID3, strBread, strPrice, strImage,strStatus);
-                            break;
-
-                        case 3: // tborder
-                            String strID2 = object.getString("id");
-                            String strOrderDate = object.getString(ManageTABLE.COLUMN_OrderDate);
-                            String strCustomerID = object.getString(ManageTABLE.COLUMN_CustomerID);
-                            String strGrandTotal = object.getString(ManageTABLE.COLUMN_GrandTotal);
-                            String strStatus1 = object.getString(ManageTABLE.COLUMN_Status);
-                            objManageTABLE.addtbOrder(strID2, strOrderDate, strCustomerID, strGrandTotal, strStatus1);
-                            break;
-
-                        case 4: // tborderdetail
-                            String strID = object.getString("id");
-                            String strOrderNo = object.getString(ManageTABLE.COLUMN_OrderNo);
-                            String strOrderDetail_ID = object.getString(ManageTABLE.COLUMN_OrderDetail_ID);
-                            String strProduct_ID = object.getString(ManageTABLE.COLUMN_Product_ID);
-                            String strAmount2 = object.getString(ManageTABLE.COLUMN_Amount);
-                            String strPrice2 = object.getString(ManageTABLE.COLUMN_Price);
-                            String strPriceTotal = object.getString(ManageTABLE.COLUMN_PriceTotal);
-                            objManageTABLE.addtbOrderDetail(strID, strOrderNo, strOrderDetail_ID, strProduct_ID,
-                                    strAmount2,strPrice2,strPriceTotal);
-                            break;
                     }   //switch
                 }
             } catch (Exception e) {
@@ -199,10 +156,7 @@ public class MainActivity extends AppCompatActivity {
         SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
                 MODE_PRIVATE, null); // MODE_PRIVATE คือ ลบข้อมูลในตาราง แต่ไม่ลบตารางออก
         objSqLiteDatabase.delete(ManageTABLE.TABLE_USER, null, null);
-        objSqLiteDatabase.delete(ManageTABLE.TABLE_BREAD, null, null);
-        objSqLiteDatabase.delete(ManageTABLE.TABLE_ORDER, null, null);
-        objSqLiteDatabase.delete(ManageTABLE.TABLE_TBORDER, null, null);
-        objSqLiteDatabase.delete(ManageTABLE.TABLE_TBORDER_DETAIL, null, null);
+
     }   // deleteAllSQLite
 
 }   // Main class

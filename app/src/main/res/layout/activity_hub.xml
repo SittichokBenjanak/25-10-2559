@@ -31,10 +31,10 @@
             <ImageView
                 android:layout_width="@dimen/icon"
                 android:layout_height="@dimen/icon"
-
-                android:id="@+id/imageView3"
-                android:src="@drawable/orderbread"
+                android:id="@+id/imageView6"
+                android:src="@drawable/generate"
                 android:layout_weight="1" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -58,8 +58,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/a11"
-                android:id="@+id/textView8"
+                android:text="@string/a33"
+                android:id="@+id/textView11"
                 android:textSize="@dimen/h2"
                 android:layout_weight="1"
                 android:textStyle="bold"
@@ -67,6 +67,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/text" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -77,8 +78,8 @@
             <ImageView
                 android:layout_width="@dimen/icon"
                 android:layout_height="@dimen/icon"
-                android:id="@+id/imageView6"
-                android:src="@drawable/generate"
+                android:id="@+id/imageView4"
+                android:src="@drawable/edituser"
                 android:layout_weight="1" />
 
             <ImageView
@@ -98,8 +99,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/a33"
-                android:id="@+id/textView11"
+                android:text="@string/e33"
+                android:id="@+id/textView9"
                 android:textSize="@dimen/h2"
                 android:layout_weight="1"
                 android:textStyle="bold"
@@ -131,13 +132,6 @@
             <ImageView
                 android:layout_width="@dimen/icon"
                 android:layout_height="@dimen/icon"
-                android:id="@+id/imageView4"
-                android:src="@drawable/edituser"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:layout_width="@dimen/icon"
-                android:layout_height="@dimen/icon"
                 android:id="@+id/imageView5"
                 android:src="@drawable/maphey"
                 android:layout_weight="1" />
@@ -147,19 +141,6 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/e33"
-                android:id="@+id/textView9"
-                android:textSize="@dimen/h2"
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:textColor="@color/text" />
 
             <TextView
                 android:layout_width="wrap_content"

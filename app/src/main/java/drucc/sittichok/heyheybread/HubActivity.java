@@ -28,8 +28,8 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
 
     // Explicit
 
-    private ImageView orderImageView, readImageView,
-    editImageView, mapImageView, complacencyImageView, checkmoneyImageView;
+    private ImageView orderImageView,editImageView, mapImageView,
+            complacencyImageView, checkmoneyImageView;
     private String idString;    // รับค่า Receive id ที่ user login อยู่
 
     @Override
@@ -74,10 +74,11 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
         StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(threadPolicy);
         int intTimes = 1;
-        while (intTimes <= 1) {
+        while (intTimes <= 2) {
             InputStream objInputStream = null;
             String strJSON = null;
             String strURLtborder = "http://www.fourchokcodding.com/mos/php_get_tborder.php";
+            String strURLtborderDetail = "http://www.fourchokcodding.com/mos/php_get_tborderdetail.php";
             HttpPost objHttpPost = null;
             // 1 Create InputStream
             try {
@@ -85,6 +86,9 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
                 switch (intTimes) {
                     case 1:
                         objHttpPost = new HttpPost(strURLtborder);
+                        break;
+                    case 2:
+                        objHttpPost = new HttpPost(strURLtborderDetail);
                         break;
                 }   // switch
 
@@ -125,6 +129,18 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
                             String strStatus1 = object.getString(ManageTABLE.COLUMN_Status);
                             objManageTABLE.addtbOrder(strID2, strOrderDate, strCustomerID, strGrandTotal, strStatus1);
                             break;
+                        case 2: // tborderdetail
+                            ManageTABLE obj2ManageTABLE = new ManageTABLE(this);
+                            String strID = object.getString("id");
+                            String strOrderNo = object.getString(ManageTABLE.COLUMN_OrderNo);
+                            String strOrderDetail_ID = object.getString(ManageTABLE.COLUMN_OrderDetail_ID);
+                            String strProduct_ID = object.getString(ManageTABLE.COLUMN_Product_ID);
+                            String strAmount2 = object.getString(ManageTABLE.COLUMN_Amount);
+                            String strPrice2 = object.getString(ManageTABLE.COLUMN_Price);
+                            String strPriceTotal = object.getString(ManageTABLE.COLUMN_PriceTotal);
+                            obj2ManageTABLE.addtbOrderDetail(strID, strOrderNo, strOrderDetail_ID, strProduct_ID,
+                                    strAmount2,strPrice2,strPriceTotal);
+                            break;
                     }
 
                 }   // for
@@ -143,6 +159,7 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
         SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
                 MODE_PRIVATE, null);
         objSqLiteDatabase.delete(ManageTABLE.TABLE_TBORDER,null,null);
+        objSqLiteDatabase.delete(ManageTABLE.TABLE_TBORDER_DETAIL, null, null);
 
     }   // deleteOrder
 
@@ -150,7 +167,6 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
     private void imageController() {
         idString = getIntent().getStringExtra("ID");
         orderImageView.setOnClickListener(this);
-        readImageView.setOnClickListener(this);
         editImageView.setOnClickListener(this);
         mapImageView.setOnClickListener(this);
         complacencyImageView.setOnClickListener(this);
@@ -159,7 +175,6 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
 
     private void bindWidget() {
         orderImageView = (ImageView) findViewById(R.id.imageView2);
-        readImageView = (ImageView) findViewById(R.id.imageView3);
         editImageView = (ImageView) findViewById(R.id.imageView4);
         mapImageView = (ImageView) findViewById(R.id.imageView5);
         complacencyImageView = (ImageView) findViewById(R.id.imageView6);
@@ -175,11 +190,6 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
                 Intent objIntent = new Intent(HubActivity.this, showMenuActivity.class);
                 objIntent.putExtra("ID", idString);
                 startActivity(objIntent);
-                break;
-
-            case R.id.imageView3:
-                //Read Order
-                clickReadOrder();
                 break;
 
             case R.id.imageView4:
@@ -229,17 +239,4 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
 
     }   // checkHistory
 
-    private void clickReadOrder() {
-        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
-                MODE_PRIVATE, null);
-        Cursor objCursor = objSqLiteDatabase.rawQuery("SELECT * FROM " + ManageTABLE.TABLE_ORDER, null);
-        if (objCursor.getCount() > 0) {
-            Intent objIntent = new Intent(HubActivity.this, ConfirmOrderActivity.class);
-            objIntent.putExtra("idUser", idString);
-            startActivity(objIntent);
-        } else {
-            MyAlertDialog objMyAlertDialog = new MyAlertDialog();
-            objMyAlertDialog.errorDialog(HubActivity.this,"ยังไม่มีการสั่งซื้อ","กรุณาสั่งสินค้าก่อนครับ");
-        }
-    }
 }   // Main Class
