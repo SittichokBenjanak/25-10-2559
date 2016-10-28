@@ -23,18 +23,26 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+                  android:screenOrientation="portrait"
+
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".HubActivity" />
-        <activity android:name=".showMenuActivity" />
-        <activity android:name=".ConfirmOrderActivity" />
-        <activity android:name=".EditUser" />
+        <activity android:name=".RegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HubActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".showMenuActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ConfirmOrderActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".EditUser"
+            android:screenOrientation="portrait"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -49,11 +57,14 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" />
-        <activity android:name=".HistoryActivity" />
-        <activity android:name=".ShowOrderActivity" />
-        <activity android:name=".Main2Activity" />
-        <activity android:name=".OrderDetailActivity" />
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".HistoryActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".OrderDetailActivity"
+            android:screenOrientation="portrait"/>
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -62,9 +73,10 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".DetailOrderAdapter" />
+
         <activity android:name=".DetailAdapter" />
-        <activity android:name=".CheckmoneyActivity"></activity>
+        <activity android:name=".CheckmoneyActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
