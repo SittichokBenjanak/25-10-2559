@@ -1,10 +1,12 @@
 package drucc.sittichok.heyheybread;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -17,29 +19,61 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CheckmoneyActivity extends AppCompatActivity {
 
     private String strID;
 
-
+    private TextView dateTextView, moneyTextView;
+    private String strDate ,Balane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkmoney);
-
         strID = getIntent().getStringExtra("ID");
-
         // deletesynUserTable
         deleteUser();
-
         // synUserTable
         synUserTABLE();
-
-
-
+        // Date
+        date();
+        blance();
+        // bindWidget
+        bindWidget();
     }
+
+    private void blance() {
+        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
+                MODE_PRIVATE, null);
+        Cursor objCursor = objSqLiteDatabase.rawQuery("SELECT * FROM userTABLE WHERE _id = " + "'" + strID + "'", null);
+        objCursor.moveToFirst();
+        String[] resultStrings = new String[objCursor.getColumnCount()];
+        for (int i=0; i<objCursor.getColumnCount(); i++) {
+            resultStrings[i] = objCursor.getString(i);
+        }   //for
+        Balane = resultStrings[7]; // รับค่า ชื่อ
+        objCursor.close();
+    }
+
+    private void bindWidget() {
+        dateTextView = (TextView) findViewById(R.id.textView56);
+        moneyTextView = (TextView) findViewById(R.id.textView57);
+
+        dateTextView.setText(strDate);
+        moneyTextView.setText(Balane);
+
+    }   // bindWidget
+
+    private void date() {
+        DateFormat myDateFormat = new SimpleDateFormat("dd/MM/yyyy"); // วันที่ปัจจุบัน
+        Date clickDate = new Date();
+        strDate = myDateFormat.format(clickDate);
+    }   // date
+
 
     private void synUserTABLE() {
         StrictMode.ThreadPolicy myPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

@@ -137,36 +137,55 @@
 
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="257dp"
                 android:id="@+id/listView2"
-                android:padding="15dp" />
+                android:padding="15dp"
+                android:layout_height="300dp" />
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/textView23"
-            android:textSize="@dimen/h2"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="20dp" />
+            android:layout_alignParentBottom="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/e1"
-            android:id="@+id/textView29"
-            android:textSize="@dimen/h2"
-            android:layout_alignParentRight="false"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentEnd="false"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/e1"
+                android:id="@+id/textView29"
+                android:textSize="@dimen/h2"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentEnd="false"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/textView23"
+                android:textSize="@dimen/h2"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp" />
+
+            <TextView
+                android:text="@string/d2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView8"
+                android:layout_weight="1"
+                android:textSize="@dimen/h2"
+                android:layout_marginTop="20dp" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

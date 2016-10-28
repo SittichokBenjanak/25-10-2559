@@ -36,22 +36,43 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class showMenuActivity extends AppCompatActivity {
-
     // Explicit
     private String strID;   // id ของ User ที่ login อยู่
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_menu);
-
         //Synchronize breadTABLE
         synBreadTABLE();
-
     }   //  onCreate
-
-
+    public void onBackPressed() {
+        android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(this);
+        dialog.setIcon(R.drawable.icon_question);
+        dialog.setCancelable(true);
+        dialog.setMessage("คุณต้องการยกเลิกการสั่งซื้อ?");
+        dialog.setPositiveButton("ใช่", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent objIntent = new Intent(showMenuActivity.this, HubActivity.class);
+                // ทำเสร็จแล้ว ให้ กลับไปหน้า HubActivity.class
+                strID = getIntent().getStringExtra("ID");
+                objIntent.putExtra("ID", strID); //แล้วส่งค่า ID คืนไปที่หน้า HubActivity.class ด้วย
+                startActivity(objIntent);
+                deleteorder();
+                dialog.dismiss();
+            }
+        });
+        dialog.setNegativeButton("ไม่", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        dialog.show();
+    }
+    private void deleteorder() {
+        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
+                MODE_PRIVATE, null);
+        objSqLiteDatabase.delete(ManageTABLE.TABLE_ORDER,null,null);
+    }   // deleteorder
     // Create Inner Class
     public class MyConnectedBread extends AsyncTask<Void, Void, String> {
         @Override
@@ -67,7 +88,6 @@ public class showMenuActivity extends AppCompatActivity {
                 return null;
             }
         } // doInBack
-
         @Override
         protected void onPostExecute(String strJSON) {
             super.onPostExecute(strJSON);
@@ -94,7 +114,6 @@ public class showMenuActivity extends AppCompatActivity {
             }
         }   // onPost
     }   // MyConnectedBread
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -105,12 +124,10 @@ public class showMenuActivity extends AppCompatActivity {
         super.onRestart();
         synBreadTABLE();
     }  // ใช้งานไม่ได้
-
     private void synBreadTABLE() {
         MyConnectedBread myConnectedBread = new MyConnectedBread();
         myConnectedBread.execute();
     } //  synBreadTABLE
-
     public void clickConfirmOrder(View view) {
         SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME, // เปิดฐานข้อมูล Heyhey.db
                 MODE_PRIVATE, null);
@@ -127,18 +144,15 @@ public class showMenuActivity extends AppCompatActivity {
             // แสดงกล่องข้อความว่า "กรุณา Order","กรุณาสั่งอาหารก่อนครับ"
         }
     }   // clickConfirmOrder
-
     private void ListViewController() {
         // Setup Value
         SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME, // ทำการเปิดฐานข้อมูล
                 MODE_PRIVATE, null);
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM breadTABLE WHERE status = '1'", null); // จองหน่วยความจำ
         cursor.moveToFirst();
-
         String[] iconStrings = new String[cursor.getCount()];
         final String[] breadStrings = new String[cursor.getCount()];
         final String[] priceStrings = new String[cursor.getCount()];
-
         for (int i=0; i<cursor.getCount();i++) {
             iconStrings[i] = cursor.getString(cursor.getColumnIndex(ManageTABLE.COLUMN_Image));
             breadStrings[i] = cursor.getString(cursor.getColumnIndex(ManageTABLE.COLUMN_Bread));
@@ -146,7 +160,6 @@ public class showMenuActivity extends AppCompatActivity {
             cursor.moveToNext();
         } // for
         cursor.close();
-
         ListView menuListView = (ListView) findViewById(R.id.listView);  // นำ ListView ที่สร้างมาใช้งาน
         MenuAdapter objMenuAdapter = new MenuAdapter(showMenuActivity.this, // ให้ ListView โชว์ค่า ชื่อ ราคา จำนวน รูป
                  priceStrings, breadStrings, iconStrings);
@@ -159,7 +172,6 @@ public class showMenuActivity extends AppCompatActivity {
             }   // event
         });
     }   //  ListViewController
-
     private void ChooseItem(final String breadString,
                             final String priceString) {
         CharSequence[] mySequences = {"1 ชิ้น", "2 ชิ้น", "3 ชิ้น", "4 ชิ้น", "5 ชิ้น",
@@ -193,7 +205,6 @@ public class showMenuActivity extends AppCompatActivity {
                 priceString,        // ราคาขนมปัง
                 Integer.toString(intItem));  // จำนวนขนมปัง
     }   //UpdateOrderToSQLit
-
     private void addValueToSQLite(String strName, String strSurname,
                                   String strAddress, String strPhone,
                                   String strbread, String strPrice, String strItem) {
@@ -204,12 +215,10 @@ public class showMenuActivity extends AppCompatActivity {
         Log.d("hey", "Bread " +strbread);
         Log.d("hey", "Price " +strPrice);
         Log.d("hey", "Item " +strItem);
-
         //update to SQLite
         DateFormat myDateFormat = new SimpleDateFormat("dd/MM/yyyy"); // วันที่ปัจจุบัน
         Date clickDate = new Date();
         String strDate = myDateFormat.format(clickDate);
-
         try {
             ManageTABLE objManageTABLE = new ManageTABLE(this);
             String[] myResultStrings = objManageTABLE.SearchBread(strbread); // ถ้าลูกค้า สั่งสินค้า ชื่อเดิม
@@ -222,15 +231,11 @@ public class showMenuActivity extends AppCompatActivity {
                     ManageTABLE.COLUMN_id + "=" + Integer.parseInt(myResultStrings[0]),null );
             addOrderToMySQLite(strName,strDate,strSurname,strAddress,strPhone,strbread,strPrice, strNewItem);
             //ส่ง Orderที่ลูกค้าสั่ง อีก 1 แถว เพราะลบชื่อสินค้าที่ ลูกค้าสั่งซ้ำ
-
-
         } catch (Exception e) {
             addOrderToMySQLite(strName,strDate,strSurname,strAddress,  //ถ้าลูกค้าไม่ได้ เลือกสินค้า เดิม ก็ เพิ่ม ปกติ
                     strPhone,strbread,strPrice,strItem);
         }
-
     }   // addValueToSQLite
-
     private void addOrderToMySQLite(String strName, // ชื่อลูกค้า
                                     String strDate, // วันที่สั่ง
                                     String strSurname, // นามสกุล
@@ -246,6 +251,4 @@ public class showMenuActivity extends AppCompatActivity {
         Toast.makeText(showMenuActivity.this, "เลือกสินค้าสำเร็จ",Toast.LENGTH_SHORT ).show();
         // โขว์ข้อความ "เพิ่มสินค้าสำเร็จ" แล้วหายไปภายใน 3.5 วิ
     }
-
-
 }   // Main Class

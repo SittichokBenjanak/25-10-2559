@@ -17,7 +17,7 @@
     <string name="b1">No</string>
     <string name="b2">ชื่อ</string>
     <string name="b3">จำนวน</string>
-    <string name="b4">ราคา/หน่วย</string>
+    <string name="b4">ราคา/ชิ้น</string>
     <string name="b5">ราคารวม</string>
     <string name="c3">เข้าสู่ระบบ</string>
     <string name="c2">สมัครสมาชิก</string>
@@ -50,5 +50,8 @@
     <string name="f4">ตำแหน่งร้านขนมปัง </string>
     <string name="f44">เช็คยอดเงิน</string>
     <string name="title_activity_maps">Map</string>
+    <string name="checkmoney">เช็คยอดเงิน</string>
+    <string name="day">วันที่ : </string>
+    <string name="mouny">คงเหลือ : </string>
 
 </resources>

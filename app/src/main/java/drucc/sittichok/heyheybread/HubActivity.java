@@ -25,29 +25,21 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class HubActivity extends AppCompatActivity implements View.OnClickListener {
-
     // Explicit
-
     private ImageView orderImageView,editImageView, mapImageView,
             complacencyImageView, checkmoneyImageView;
     private String idString;    // รับค่า Receive id ที่ user login อยู่
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hub);
         deleteOrder();
         syntborder();
-
         //Bind Widget
         bindWidget();
-
         //Image Controller
         imageController();
-
-
     }   // onCreate
-
     public void onBackPressed() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setIcon(R.drawable.icon_question);
@@ -60,16 +52,13 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
                 dialog.dismiss();
             }
         });
-
         dialog.setNegativeButton("ไม่", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
-
                 dialog.show();
     }
-
     private void syntborder() {
         StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(threadPolicy);
@@ -91,11 +80,9 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
                         objHttpPost = new HttpPost(strURLtborderDetail);
                         break;
                 }   // switch
-
                 HttpResponse objHttpResponse = objHttpClient.execute(objHttpPost);
                 HttpEntity objHttpEntity = objHttpResponse.getEntity();
                 objInputStream = objHttpEntity.getContent();
-
             } catch (Exception e) {
                 Log.d("sss", "InputStream ==> " + e.toString());
             }
@@ -109,11 +96,9 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
                 }
                 objInputStream.close();
                 strJSON = objStringBuilder.toString();
-
             } catch (Exception e) {
                 Log.d("sss", "InputStream ==> " + e.toString());
             }
-
             // 3 Update JSON String to SQLite
             try {
                 JSONArray objJsonArray = new JSONArray(strJSON);
@@ -142,28 +127,19 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
                                     strAmount2,strPrice2,strPriceTotal);
                             break;
                     }
-
                 }   // for
-
             } catch (Exception e) {
                 Log.d("sss", "InputStream ==> " + e.toString());
             }
             intTimes += 1;
-
         }   // while
-
-
     }   // syntborder
-
     private void deleteOrder() {
         SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
                 MODE_PRIVATE, null);
         objSqLiteDatabase.delete(ManageTABLE.TABLE_TBORDER,null,null);
         objSqLiteDatabase.delete(ManageTABLE.TABLE_TBORDER_DETAIL, null, null);
-
     }   // deleteOrder
-
-
     private void imageController() {
         idString = getIntent().getStringExtra("ID");
         orderImageView.setOnClickListener(this);
@@ -172,16 +148,13 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
         complacencyImageView.setOnClickListener(this);
         checkmoneyImageView.setOnClickListener(this);
     }
-
     private void bindWidget() {
         orderImageView = (ImageView) findViewById(R.id.imageView2);
         editImageView = (ImageView) findViewById(R.id.imageView4);
         mapImageView = (ImageView) findViewById(R.id.imageView5);
         complacencyImageView = (ImageView) findViewById(R.id.imageView6);
         checkmoneyImageView = (ImageView) findViewById(R.id.imageView10);
-
     }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -191,38 +164,29 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
                 objIntent.putExtra("ID", idString);
                 startActivity(objIntent);
                 break;
-
             case R.id.imageView4:
                 //Edit Account
                 Intent intent = new Intent(HubActivity.this, EditUser.class);
                 intent.putExtra("ID", idString);
                 startActivity(intent);
-
                 break;
-
             case R.id.imageView5:
                 //My Map
                 Intent Maps = new Intent(HubActivity.this, MapsActivity.class);
                 startActivity(Maps);
-
                 break;
-
             case R.id.imageView6:
                 // OrderHistory
                 checkHistory();
-
                 break;
-
             case R.id.imageView10:
                 // checkmoney
                 Intent money = new Intent(HubActivity.this, CheckmoneyActivity.class);
                 money.putExtra("ID", idString);
                 startActivity(money);
-
                 break;
         }   //switch
     }   // onClick
-
     private void checkHistory() {
         SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
                 MODE_PRIVATE, null);
@@ -235,8 +199,5 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
             MyAlertDialog objMyAlertDialog = new MyAlertDialog();
             objMyAlertDialog.errorDialog(HubActivity.this,"ยังไม่มีประวัติการสั่งซื้อ","กรุณาสั่งสินค้าก่อนครับ");
         }
-
-
     }   // checkHistory
-
 }   // Main Class

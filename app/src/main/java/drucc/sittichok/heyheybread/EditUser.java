@@ -34,8 +34,6 @@ import java.io.InputStreamReader;
 
 public class EditUser extends AppCompatActivity {
     // Explicit
-
-
     private EditText passwordEditText,
             nameEditText,surnameEditText,addressEditText,
             phoneEditText;
@@ -43,28 +41,21 @@ public class EditUser extends AppCompatActivity {
     private String strID;
     private String passwordString,nameString,surnameString,addressString, phoneString;
     private static final String urlSTRING = "http://www.fourchokcodding.com/mos/php_edit_user.php";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user);
-
         deleteSynUser();
-
         synEditUserTABLE();
-
         // Bind Widget
         bindWidget();
-
         //Show View
         showView();
     } // Main Method
-
     private void deleteSynUser() {
         SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
                 MODE_PRIVATE, null);
         objSqLiteDatabase.delete(ManageTABLE.TABLE_USER, null, null);
-
     }   // deleteSynUser
 
     private void synEditUserTABLE() {
@@ -131,8 +122,6 @@ public class EditUser extends AppCompatActivity {
             intTimes += 1;
         }   //while
     }   // synJSONtoSQLite
-
-
     private void showView() {
         strID = getIntent().getStringExtra("ID");
         SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
@@ -145,7 +134,6 @@ public class EditUser extends AppCompatActivity {
             resultStrings[i] = cursor.getString(i);
         }   //for
         cursor.close();
-
         userTextView.setText(resultStrings[1]);
         passwordEditText.setText(resultStrings[2]);
         nameEditText.setText(resultStrings[3]);
@@ -160,7 +148,6 @@ public class EditUser extends AppCompatActivity {
         surnameString = surnameEditText.getText().toString().trim();
         addressString = addressEditText.getText().toString().trim();
         phoneString = phoneEditText.getText().toString().trim();
-
         // Check Space
         if (checkSpace()) {
             // ถ้ามีช่องว่าง
@@ -169,7 +156,6 @@ public class EditUser extends AppCompatActivity {
         }  else {
             // OK  On space
             updateValueToServer();
-
         }
     } // clickSaveEdit
 
@@ -197,7 +183,6 @@ public class EditUser extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         Toast.makeText(EditUser.this,"แก้ไขข้อมูลสำเร็จ",Toast.LENGTH_SHORT).show();
                         finish();
-
                     } else {
                         Toast.makeText(EditUser.this,"แก้ไขข้อมูลล้มเหลว",Toast.LENGTH_SHORT).show();
                     }
@@ -218,11 +203,9 @@ public class EditUser extends AppCompatActivity {
                 addressString.equals("") ||
                 phoneString.equals("");
     }   // checkSpace
-
     public void clickCancelEdit(View view) {
         finish();
     } // clickCancelEdit
-
     private void bindWidget() {
         userTextView = (TextView) findViewById(R.id.editText3);
         passwordEditText = (EditText) findViewById(R.id.editText4);

@@ -88,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
                 phoneString.equals("")) {
             //Have Space  ถ้ามีช่องว่างให้ทำ
             MyAlertDialog objMyAlertDialog = new MyAlertDialog();
-            objMyAlertDialog.errorDialog(RegisterActivity.this, "มีช่องว่าง", "กรุณากรอกข้อมูลให้ครบทุกช่อง");
+            objMyAlertDialog.errorDialog(RegisterActivity.this, "มีช่องว่าง", "กรุณากรอกข้อมูลให้ครบ");
         } else {
             //No Space
             if (checkUser()) {
