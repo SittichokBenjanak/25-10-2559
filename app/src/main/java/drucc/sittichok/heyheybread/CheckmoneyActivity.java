@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -28,7 +29,7 @@ public class CheckmoneyActivity extends AppCompatActivity {
     private String strID;
 
     private TextView dateTextView, moneyTextView;
-    private String strDate ,Balane;
+    private String strDate ,Balane,strBalance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,16 +56,19 @@ public class CheckmoneyActivity extends AppCompatActivity {
         for (int i=0; i<objCursor.getColumnCount(); i++) {
             resultStrings[i] = objCursor.getString(i);
         }   //for
+
         Balane = resultStrings[7]; // รับค่า ชื่อ
+        int balance = Integer.parseInt(Balane);
+        NumberFormat objNumberFormat = NumberFormat.getInstance();
+        strBalance = objNumberFormat.format(balance);
         objCursor.close();
     }
 
     private void bindWidget() {
         dateTextView = (TextView) findViewById(R.id.textView56);
         moneyTextView = (TextView) findViewById(R.id.textView57);
-
         dateTextView.setText(strDate);
-        moneyTextView.setText(Balane);
+        moneyTextView.setText(strBalance);
 
     }   // bindWidget
 

@@ -44,7 +44,7 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setIcon(R.drawable.icon_question);
         dialog.setCancelable(true);
-        dialog.setMessage("คุณต้องการจะปิดแอพพลิเคชั่น?");
+        dialog.setMessage("คุณต้องการออกจากระบบ?");
         dialog.setPositiveButton("ใช่", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Intent objIntent = new Intent(HubActivity.this, MainActivity.class);

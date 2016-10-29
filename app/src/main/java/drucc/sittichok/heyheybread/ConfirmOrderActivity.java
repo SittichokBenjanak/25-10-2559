@@ -40,6 +40,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class ConfirmOrderActivity extends AppCompatActivity {
@@ -379,12 +380,21 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         finish(); // ปิดหน้าต่าง แสดงรายการลง แล้ว จะไป โชว์ ที่หน้า สั่งซื้อสินค้า
     } // clickMore
     private void showView() {
+        // รับราคาที่สั่งทั้งหมด
+        String strsum = Integer.toString(totalAnInt);
+        // จำนวนเงินคงเหลือ Balane  // ราคารวม  strsum
+        int balance = Integer.parseInt(Balane);
+        int intsum = Integer.parseInt(strsum);
+        //  เซ็ตค่าให้ มี จุลภาค
+        NumberFormat objNumberFormat = NumberFormat.getInstance();
+        String strBalce = objNumberFormat.format(balance);
+        String strSumprice = objNumberFormat.format(intsum);
+
         numberorderTextView.setText("เลขที่สั่งซื้อ : " + strOrderNumber );
         dateTextView.setText("วันที่สั่งซื้อ : " + dateString); // นำค่า Date ใส่ไปใน dateTextView
         nameTextView.setText("ผู้สั่งซื้อ : " + nameString + " " + surnameString); // นำค่า ชื่อ กัย นามสกุล ใส่ไปใน nameTextView
-        statusTextView.setText("ยอดเงินคงเหลือ : " + Balane); // นำค่า ที่อยู่  ใส่ไปใน addressTextView
-//        phoneTextView.setText("เบอร์โทรศีพท์ : " + phoneString );    // นำค่า เบอร์โทร ใส่ไปใน phoneTextView
-        totalTextView.setText(Integer.toString(totalAnInt)); // นำค่า ราคารวมทั้งหมด ใส่ไปใน totalTextView
+        statusTextView.setText("ยอดเงินคงเหลือ : " + strBalce + " " + "บาท"); // นำค่า ที่อยู่  ใส่ไปใน addressTextView
+        totalTextView.setText(strSumprice); // นำค่า ราคารวมทั้งหมด ใส่ไปใน totalTextView
     }   // showView
     private void readAllData() {
         SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,

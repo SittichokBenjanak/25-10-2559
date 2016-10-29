@@ -48,17 +48,16 @@
                     android:textSize="16dp"
                     android:layout_marginBottom="5dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView19"
-                    android:textSize="16dp"
-                    android:gravity="right"
-                    android:text="New Text"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1" />
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView19"
+                android:textSize="16dp"
+                android:text="New Text"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp" />
 
             <TextView
                 android:layout_width="wrap_content"

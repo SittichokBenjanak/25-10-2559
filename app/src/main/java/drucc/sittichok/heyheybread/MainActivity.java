@@ -1,5 +1,6 @@
 package drucc.sittichok.heyheybread;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.StrictMode;
@@ -44,6 +45,24 @@ public class MainActivity extends AppCompatActivity {
         //Synchronize JSON to SQLite
         synJSONtoSQLite();
     }   // OnCreate
+
+    public void onBackPressed() {
+        android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(this);
+        dialog.setIcon(R.drawable.icon_question);
+        dialog.setCancelable(true);
+        dialog.setMessage("คุณต้องการปิดแอพพลิเคชัน?");
+        dialog.setPositiveButton("ใช่", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        dialog.setNegativeButton("ไม่", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        dialog.show();
+    }
 
     private void bindWidget() {
         userEditText = (EditText) findViewById(R.id.editText);
