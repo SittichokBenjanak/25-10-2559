@@ -79,6 +79,13 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         findLastOrderNo();
     }   // Main Method
 
+    public void onBackPressed(){
+        Intent objIntent = new Intent(ConfirmOrderActivity.this, showMenuActivity.class);
+        objIntent.putExtra("ID", strIDuser);
+        startActivity(objIntent);
+        finish();
+    }
+
     private void synUserTABLE() {
         StrictMode.ThreadPolicy myPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(myPolicy);   //เปิดโปรโตรคอลให้แอพเชื่อมต่ออินเตอร์เน็ตได้ ใช้ได้ทั้งหมด โดยใช้คำสั่ง permitAll
@@ -270,12 +277,14 @@ public class ConfirmOrderActivity extends AppCompatActivity {
             // ทำเสร็จแล้ว ให้ กลับไปหน้า HubActivity.class
             String strID = getIntent().getStringExtra("idUser");
             objIntent.putExtra("ID", strID); //แล้วส่งค่า ID คืนไปที่หน้า HubActivity.class ด้วย
-            Log.d("19Feb", "ID ที่ได้ ==> " + strID);
+            //Log.d("19Feb", "ID ที่ได้ ==> " + strID);
             startActivity(objIntent);
+
             //Delete OrderTABLE
             objSqLiteDatabase.delete(ManageTABLE.TABLE_ORDER,null,null);
             Toast.makeText(ConfirmOrderActivity.this,"สั่งซื้อสินค้าสำเร็จ", // โชว์ข้อความการยืนยัน 3.5 วินาที
                     Toast.LENGTH_SHORT).show();
+            finish();
         }
     }   // clickFinish
 
@@ -377,6 +386,9 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         }
     }   // updateTotborder
     public void clickMore(View view) {
+        Intent objIntent = new Intent(ConfirmOrderActivity.this, showMenuActivity.class);
+        objIntent.putExtra("ID", strIDuser);
+        startActivity(objIntent);
         finish(); // ปิดหน้าต่าง แสดงรายการลง แล้ว จะไป โชว์ ที่หน้า สั่งซื้อสินค้า
     } // clickMore
     private void showView() {

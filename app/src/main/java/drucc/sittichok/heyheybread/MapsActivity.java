@@ -28,6 +28,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
     }
+    public void onBackPressed(){
+        finish();
+    }
 
     public void ClickBottomMap(View view) {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()

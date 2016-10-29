@@ -58,7 +58,7 @@ public class showMenuActivity extends AppCompatActivity {
                 objIntent.putExtra("ID", strID); //แล้วส่งค่า ID คืนไปที่หน้า HubActivity.class ด้วย
                 startActivity(objIntent);
                 deleteorder();
-                dialog.dismiss();
+                finish();
             }
         });
         dialog.setNegativeButton("ไม่", new DialogInterface.OnClickListener() {
@@ -137,6 +137,8 @@ public class showMenuActivity extends AppCompatActivity {
             Intent objIntent = new Intent(showMenuActivity.this, ConfirmOrderActivity.class); // ให้โชว์หน้า ConfirmOrderActivity
             objIntent.putExtra("idUser", strID); // ส่งID ของลูกค้าไปด้วย
             startActivity(objIntent);  // เปิดการส่ง
+            finish();
+
         } else {
             //No Data ไม่มีข้อมูล
             MyAlertDialog objMyAlertDialog = new MyAlertDialog();

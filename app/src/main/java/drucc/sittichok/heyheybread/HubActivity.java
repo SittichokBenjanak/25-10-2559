@@ -49,7 +49,7 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
             public void onClick(DialogInterface dialog, int which) {
                 Intent objIntent = new Intent(HubActivity.this, MainActivity.class);
                 startActivity(objIntent);
-                dialog.dismiss();
+                finish();
             }
         });
         dialog.setNegativeButton("ไม่", new DialogInterface.OnClickListener() {
@@ -163,12 +163,14 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
                 Intent objIntent = new Intent(HubActivity.this, showMenuActivity.class);
                 objIntent.putExtra("ID", idString);
                 startActivity(objIntent);
+                finish();
                 break;
             case R.id.imageView4:
                 //Edit Account
                 Intent intent = new Intent(HubActivity.this, EditUser.class);
                 intent.putExtra("ID", idString);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.imageView5:
                 //My Map
@@ -178,12 +180,14 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
             case R.id.imageView6:
                 // OrderHistory
                 checkHistory();
+
                 break;
             case R.id.imageView10:
                 // checkmoney
                 Intent money = new Intent(HubActivity.this, CheckmoneyActivity.class);
                 money.putExtra("ID", idString);
                 startActivity(money);
+                finish();
                 break;
         }   //switch
     }   // onClick
@@ -195,6 +199,7 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
             Intent intent2 = new Intent(HubActivity.this, HistoryActivity.class);
             intent2.putExtra("ID", idString);
             startActivity(intent2);
+            finish();
         } else {
             MyAlertDialog objMyAlertDialog = new MyAlertDialog();
             objMyAlertDialog.errorDialog(HubActivity.this,"ยังไม่มีประวัติการสั่งซื้อ","กรุณาสั่งสินค้าก่อนครับ");

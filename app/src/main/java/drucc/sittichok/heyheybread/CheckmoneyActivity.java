@@ -1,5 +1,6 @@
 package drucc.sittichok.heyheybread;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.StrictMode;
@@ -45,6 +46,13 @@ public class CheckmoneyActivity extends AppCompatActivity {
         blance();
         // bindWidget
         bindWidget();
+    }
+
+    public void onBackPressed(){
+        Intent money = new Intent(CheckmoneyActivity.this, HubActivity.class);
+        money.putExtra("ID", strID);
+        startActivity(money);
+        finish();
     }
 
     private void blance() {

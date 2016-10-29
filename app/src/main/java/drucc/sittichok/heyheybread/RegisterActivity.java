@@ -44,8 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Intent objIntent = new Intent(RegisterActivity.this, MainActivity.class);
                 startActivity(objIntent);
-                dialog.dismiss();
-
+                finish();
             }
         });
 
@@ -115,7 +114,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 upDateMySQL();
-                dialog.dismiss();  // dialog.dismiss ให้ dialog หายไป
+                finish();
             }
         });
         objBuilder.setNegativeButton("ยกเลิกการสมัคร", new DialogInterface.OnClickListener() {  // ถ้ายกเลิก ให้ปิดข้อความลงเฉยๆ อยู่หน้าเดิม

@@ -1,5 +1,6 @@
 package drucc.sittichok.heyheybread;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.StrictMode;
@@ -51,6 +52,13 @@ public class OrderDetailActivity extends AppCompatActivity {
             Log.d("hey","strOrderID ="+ strOrderID  + e.toString());
         }
 
+    }
+
+    public void onBackPressed(){
+        Intent intent = new Intent(OrderDetailActivity.this, HistoryActivity.class);
+        intent.putExtra("ID", strID);
+        startActivity(intent);
+        finish();
     }
 
     private void synOrderDetail() {

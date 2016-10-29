@@ -64,6 +64,13 @@ public class HistoryActivity extends AppCompatActivity {
 
     }   // onCreate
 
+    public void onBackPressed(){
+        Intent intent = new Intent(HistoryActivity.this, HubActivity.class);
+        intent.putExtra("ID", strID);
+        startActivity(intent);
+        finish();
+    }
+
     private void syntborder() {
         StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(threadPolicy);
@@ -179,6 +186,7 @@ public class HistoryActivity extends AppCompatActivity {
                 objIntent.putExtra("ID", strID);
                 objIntent.putExtra("NO", NumberOrder[i]);
                 startActivity(objIntent);
+                finish();
             }
         });
 

@@ -1,5 +1,6 @@
 package drucc.sittichok.heyheybread;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.StrictMode;
@@ -52,6 +53,13 @@ public class EditUser extends AppCompatActivity {
         //Show View
         showView();
     } // Main Method
+
+    public void onBackPressed(){
+        Intent intent = new Intent(EditUser.this, HubActivity.class);
+        intent.putExtra("ID", strID);
+        startActivity(intent);
+        finish();
+    }
     private void deleteSynUser() {
         SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
                 MODE_PRIVATE, null);
@@ -191,6 +199,9 @@ public class EditUser extends AppCompatActivity {
                 }
             }
         });
+        Intent intent = new Intent(EditUser.this, HubActivity.class);
+        intent.putExtra("ID", strID);
+        startActivity(intent);
         finish();
         Toast.makeText(EditUser.this,"แก้ไขข้อมูลสำเร็จ",Toast.LENGTH_SHORT).show();
     }   // updateValueToServer
@@ -204,6 +215,9 @@ public class EditUser extends AppCompatActivity {
                 phoneString.equals("");
     }   // checkSpace
     public void clickCancelEdit(View view) {
+        Intent intent = new Intent(EditUser.this, HubActivity.class);
+        intent.putExtra("ID", strID);
+        startActivity(intent);
         finish();
     } // clickCancelEdit
     private void bindWidget() {

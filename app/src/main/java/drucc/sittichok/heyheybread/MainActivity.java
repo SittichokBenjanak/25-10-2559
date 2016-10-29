@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent objIntent = new Intent(MainActivity.this, HubActivity.class);
                 objIntent.putExtra("ID", resultStrings[0]);
                 startActivity(objIntent);
+                finish();
             } else {
                 MyAlertDialog objMyAlertDialog = new MyAlertDialog();
                 objMyAlertDialog.errorDialog(MainActivity.this,"รหัสผ่านผิด","กรุณากรอกรหัสผ่านใหม่");
@@ -169,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void clickNewRegister(View view) {
         startActivity(new Intent(MainActivity.this,RegisterActivity.class));
+        finish();
     }   // clickNewRegister
 
     private void deleteAllSQLite() {
