@@ -143,7 +143,7 @@ public class HistoryActivity extends AppCompatActivity {
     private void readAllorder() {
         SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
                 MODE_PRIVATE, null);
-        final Cursor objCursor = objSqLiteDatabase.rawQuery("SELECT * FROM tborder WHERE CustomerID = " + strID, null);
+        final Cursor objCursor = objSqLiteDatabase.rawQuery("SELECT * FROM tborder WHERE CustomerID = " + "'" + strID + "'" +"ORDER BY `tborder`.`_id` DESC", null);
         objCursor.moveToFirst();  // ไปอยู่ที่แถวแรก ของ tborder
 
         final String[] NumberOrder = new String[objCursor.getCount()];
