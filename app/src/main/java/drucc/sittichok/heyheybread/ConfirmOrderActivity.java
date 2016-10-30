@@ -61,13 +61,13 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
+        strIDuser = getIntent().getStringExtra("idUser");
         // deletesynUserTable
         deleteUser();
         // synUserTable
         synUserTABLE();
         // Bind Widget  กำหนตตำแหน่งในรายละเอียดการสั่งซื้อ
         bindWidget();
-        strIDuser = getIntent().getStringExtra("idUser");
         balance();
         // Read All Data  นำค่าที่ลูกค้าสั่งมาแสดง และ ส่งค่า ชื่อ นามสกุล ที่ อยู่ เบอร์ โทร ของ ลูกค้า และรายการที่สั่ง
         readAllData();

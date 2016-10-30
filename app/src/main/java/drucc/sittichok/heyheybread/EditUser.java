@@ -46,6 +46,8 @@ public class EditUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user);
+        strID = getIntent().getStringExtra("ID");
+
         deleteSynUser();
         synEditUserTABLE();
         // Bind Widget
@@ -131,7 +133,7 @@ public class EditUser extends AppCompatActivity {
         }   //while
     }   // synJSONtoSQLite
     private void showView() {
-        strID = getIntent().getStringExtra("ID");
+
         SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
                 MODE_PRIVATE,null);
         Cursor cursor = sqLiteDatabase

@@ -55,9 +55,6 @@ public class HistoryActivity extends AppCompatActivity {
 
         strID = getIntent().getStringExtra("ID");
 
-        //deleteOrder();
-        //syntborder();
-
         bindWidget();   // ตัวแปล UserOrderListView = ตำแหน่งของ ListViewHistory
 
         readAllorder();
@@ -70,82 +67,6 @@ public class HistoryActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-    private void syntborder() {
-        StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(threadPolicy);
-        int intTimes = 1;
-        while (intTimes <= 1) {
-            InputStream objInputStream = null;
-            String strJSON = null;
-            String strURLtborder = "http://www.fourchokcodding.com/mos/php_get_tborder.php";
-            HttpPost objHttpPost = null;
-            // 1 Create InputStream
-            try {
-                HttpClient objHttpClient = new DefaultHttpClient();
-                switch (intTimes) {
-                    case 1:
-                        objHttpPost = new HttpPost(strURLtborder);
-                        break;
-                }   // switch
-
-                HttpResponse objHttpResponse = objHttpClient.execute(objHttpPost);
-                HttpEntity objHttpEntity = objHttpResponse.getEntity();
-                objInputStream = objHttpEntity.getContent();
-
-            } catch (Exception e) {
-                Log.d("sss", "InputStream ==> " + e.toString());
-            }
-            // 2 Create JSON String
-            try {
-                BufferedReader objBufferedReader = new BufferedReader(new InputStreamReader(objInputStream, "UTF-8"));
-                StringBuilder objStringBuilder = new StringBuilder();
-                String strLine = null;
-                while ((strLine = objBufferedReader.readLine()) != null) {
-                    objStringBuilder.append(strLine);
-                }
-                objInputStream.close();
-                strJSON = objStringBuilder.toString();
-
-            } catch (Exception e) {
-                Log.d("sss", "InputStream ==> " + e.toString());
-            }
-
-            // 3 Update JSON String to SQLite
-            try {
-                JSONArray objJsonArray = new JSONArray(strJSON);
-                for (int i = 0; i < objJsonArray.length(); i++) {
-                    JSONObject object = objJsonArray.getJSONObject(i);
-                    switch (intTimes) {
-                        case 1:
-                            ManageTABLE objManageTABLE = new ManageTABLE(this);
-                            String strID2 = object.getString("id");
-                            String strOrderDate = object.getString(ManageTABLE.COLUMN_OrderDate);
-                            String strCustomerID = object.getString(ManageTABLE.COLUMN_CustomerID);
-                            String strGrandTotal = object.getString(ManageTABLE.COLUMN_GrandTotal);
-                            String strStatus1 = object.getString(ManageTABLE.COLUMN_Status);
-                            objManageTABLE.addtbOrder(strID2 ,strOrderDate, strCustomerID, strGrandTotal, strStatus1);
-                            break;
-                    }
-
-                }   // for
-
-            } catch (Exception e) {
-                Log.d("sss", "InputStream ==> " + e.toString());
-            }
-            intTimes += 1;
-
-        }   // while
-
-
-    }   // syntborder
-
-    private void deleteOrder() {
-        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
-                MODE_PRIVATE, null);
-        objSqLiteDatabase.delete(ManageTABLE.TABLE_TBORDER, null, null);
-
-    }   // deleteOrder
 
     private void readAllorder() {
         SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,

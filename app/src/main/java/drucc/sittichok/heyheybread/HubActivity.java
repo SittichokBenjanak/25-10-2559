@@ -33,6 +33,7 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hub);
+        idString = getIntent().getStringExtra("ID");
         deleteOrder();
         syntborder();
         //Bind Widget
@@ -141,7 +142,7 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
         objSqLiteDatabase.delete(ManageTABLE.TABLE_TBORDER_DETAIL, null, null);
     }   // deleteOrder
     private void imageController() {
-        idString = getIntent().getStringExtra("ID");
+
         orderImageView.setOnClickListener(this);
         editImageView.setOnClickListener(this);
         mapImageView.setOnClickListener(this);
