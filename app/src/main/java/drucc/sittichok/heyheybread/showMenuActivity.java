@@ -42,6 +42,7 @@ public class showMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_menu);
+        strID = getIntent().getStringExtra("ID"); // อ่านค่า ID ว่า ลูกค้าคนนี้คือใคร
         //Synchronize breadTABLE
         synBreadTABLE();
     }   //  onCreate
@@ -195,7 +196,7 @@ public class showMenuActivity extends AppCompatActivity {
     }   // ChooseItem
 
     private void UpdateOrderToSQLit(String breadString, String priceString, int intItem) {
-        strID = getIntent().getStringExtra("ID"); // อ่านค่า ID ว่า ลูกค้าคนนี้คือใคร
+
         int intID = Integer.parseInt(strID);  //  parseInt(strID) ถ้าโยน อักษร 5 มา จะเป็น เลข 5
         ManageTABLE objManageTABLE = new ManageTABLE(this);
         String[] resultStrings = objManageTABLE.readAtPosition(intID -1);

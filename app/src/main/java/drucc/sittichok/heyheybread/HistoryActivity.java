@@ -55,8 +55,8 @@ public class HistoryActivity extends AppCompatActivity {
 
         strID = getIntent().getStringExtra("ID");
 
-        deleteOrder();
-        syntborder();
+        //deleteOrder();
+        //syntborder();
 
         bindWidget();   // ตัวแปล UserOrderListView = ตำแหน่งของ ListViewHistory
 

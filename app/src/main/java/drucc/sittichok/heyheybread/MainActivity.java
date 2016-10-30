@@ -177,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
         SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
                 MODE_PRIVATE, null); // MODE_PRIVATE คือ ลบข้อมูลในตาราง แต่ไม่ลบตารางออก
         objSqLiteDatabase.delete(ManageTABLE.TABLE_USER, null, null);
+        objSqLiteDatabase.delete(ManageTABLE.TABLE_ORDER, null, null);
 
     }   // deleteAllSQLite
 
